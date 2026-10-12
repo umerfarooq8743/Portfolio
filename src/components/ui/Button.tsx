@@ -1,26 +1,31 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
 
-type Variant = 'primary' | 'accent' | 'secondary' | 'ghost'
+type Variant = 'primary' | 'secondary' | 'ghost'
+type Size = 'md' | 'lg'
 
-const styles: Record<Variant, string> = {
-  primary:
-    'bg-fg text-ink-950 hover:bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.1),0_8px_30px_-8px_rgba(129,140,248,0.55)]',
-  accent:
-    'bg-gradient-to-r from-teal-300 to-indigo-300 text-ink-950 hover:brightness-110 shadow-[0_8px_30px_-8px_rgba(94,234,212,0.45)]',
-  secondary: 'border border-line-strong bg-white/[0.03] text-fg hover:bg-white/[0.07] hover:border-white/20',
-  ghost: 'text-fg-muted hover:text-fg hover:bg-white/[0.05]',
+const variants: Record<Variant, string> = {
+  primary: 'bg-signal text-signal-ink shadow-signal hover:bg-[#ff7d55] font-semibold',
+  secondary: 'border border-line-strong bg-white/[0.03] text-fg hover:border-white/25 hover:bg-white/[0.07] font-medium',
+  ghost: 'text-fg-muted hover:text-fg hover:bg-white/[0.05] font-medium',
+}
+
+const sizes: Record<Size, string> = {
+  md: 'h-10 px-4 text-sm gap-2',
+  lg: 'h-12 px-6 text-[0.95rem] gap-2.5',
 }
 
 interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   variant?: Variant
+  size?: Size
   children: ReactNode
 }
 
-export function ButtonLink({ variant = 'primary', className = '', children, ...rest }: ButtonLinkProps) {
+/** Link styled as a button. External URLs open in a new tab automatically. */
+export function ButtonLink({ variant = 'primary', size = 'md', className = '', children, ...rest }: ButtonLinkProps) {
   const external = rest.href?.startsWith('http')
   return (
     <a
-      className={`group inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98] ${styles[variant]} ${className}`}
+      className={`group inline-flex items-center justify-center rounded-full whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 ease-out active:scale-[0.98] ${variants[variant]} ${sizes[size]} ${className}`}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       {...rest}
     >

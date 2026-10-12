@@ -25,11 +25,11 @@ export const profile = {
 } as const
 
 export const navItems = [
-  { id: 'about', label: 'About' },
   { id: 'work', label: 'Work' },
+  { id: 'engineering', label: 'Engineering' },
+  { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
-  { id: 'contact', label: 'Contact' },
 ] as const
 
 /* ------------------------------------------------------------------ */
@@ -44,8 +44,10 @@ export interface Project {
   kind: string
   context: string
   status?: string
-  /** Featured projects get a large alternating case-study row. */
-  featured?: boolean
+  /** Presentation tier: 'lead' = full-width case study, 'feature' = large two-up card, 'index' = compact row. */
+  tier: 'lead' | 'feature' | 'index'
+  /** The problem the product exists to solve — one sentence. */
+  problem: string
   summary: string
   role: string
   stack: string[]
@@ -63,10 +65,12 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'shipkardo',
-    featured: true,
+    tier: 'lead',
     name: 'ShipKardo',
     kind: 'Order Management System',
     context: 'Professional · i-Splendid',
+    problem:
+      'Merchants selling across several channels end up juggling orders, stock and a dozen courier portals separately.',
     summary:
       'A full-stack order management platform that pulls orders in from every selling channel and ships them through 20+ courier integrations — with products and inventory kept in sync.',
     role: 'Full-stack — frontend and backend',
@@ -114,10 +118,12 @@ export const projects: Project[] = [
   },
   {
     id: 'splendid-accounts',
-    featured: true,
+    tier: 'feature',
     name: 'Splendid Accounts',
     kind: 'Complete ERP Solution',
     context: 'Professional · i-Splendid',
+    problem:
+      'Small and medium-sized businesses need sales, purchasing, stock, accounting and POS in one place they can reach from any device.',
     summary:
       'A complete online ERP for small and medium-sized businesses in Pakistan — sales, purchase, inventory, accounting, manufacturing, POS and financial reporting, with multi-currency support and real-time access from any device. I build its Angular frontend, including the role and permission system.',
     role: 'Frontend — Angular',
@@ -161,10 +167,12 @@ export const projects: Project[] = [
   },
   {
     id: 'mounties',
-    featured: true,
+    tier: 'feature',
     name: 'Mounties',
     kind: 'Event & Play-Area Booking Portal',
     context: 'Professional · i-Splendid · Australian client',
+    problem:
+      'A children’s play venue sells parties, timed play sessions and drop-and-dine — each with its own rules — and needed one portal to book them all.',
     summary:
       'A detailed booking portal for a children’s play venue — birthday and kids’ parties, general-admission play sessions and drop-and-dine bookings.',
     role: 'Developer — Angular, .NET & SQL Server',
@@ -198,10 +206,13 @@ export const projects: Project[] = [
   },
   {
     id: 'robeapp',
+    tier: 'index',
     name: 'RobeApp',
     kind: 'POS & Tailoring Management System',
     context: 'Personal project',
     status: 'In development',
+    problem:
+      'A tailoring business needs point of sale, invoicing, stock, customers, staff and vendors managed in one system.',
     summary:
       'A point-of-sale and tailoring management system, built on the MEAN stack with Angular 18 on the frontend and a JWT-secured Node.js API.',
     role: 'Full-stack developer',
@@ -227,9 +238,12 @@ export const projects: Project[] = [
   },
   {
     id: 'nursenova',
+    tier: 'index',
     name: 'NurseNova',
     kind: 'Healthcare Platform — Admin Panel & APIs',
     context: 'Professional · i-Splendid',
+    problem:
+      'Families need a simple way to find the right doctor, book appointments and keep track of everyone’s medication.',
     summary:
       'A healthcare platform whose mobile app helps families find the right doctor, book appointments and stay on top of their medication. I built the admin panel and the APIs the mobile app consumes.',
     role: 'Admin panel & backend APIs',
@@ -268,9 +282,12 @@ export const projects: Project[] = [
   },
   {
     id: 'winqo',
+    tier: 'index',
     name: 'WinQo',
     kind: 'Desktop WhatsApp Messaging App',
     context: 'Professional · i-Splendid',
+    problem:
+      'Businesses want to send WhatsApp messages from their own computer, without depending on a hosted web service.',
     summary:
       'A desktop application installed on a local PC that sends WhatsApp messages on a business’s behalf — built with Electron on a local MySQL database.',
     role: 'Desktop app developer',
@@ -375,7 +392,7 @@ export const experience: Role[] = [
       'Debugging application issues and improving existing functionality',
       'Collaborating with teammates to maintain production features',
     ],
-    recognition: 'Employee of the Month — April 2024',
+    recognition: 'Employee of the Month · Apr 2024',
   },
   {
     company: '3DM Solutions',
@@ -410,10 +427,9 @@ export const experience: Role[] = [
 /* Skills                                                              */
 /* ------------------------------------------------------------------ */
 
-export const skillGroups: { title: string; caption: string; items: string[]; span?: string }[] = [
+export const skillGroups: { title: string; caption: string; items: string[] }[] = [
   {
     title: 'Core stack',
-    span: 'sm:col-span-2',
     caption: 'What I use every day',
     items: ['Angular', 'TypeScript', 'JavaScript', 'Node.js', 'Express.js', 'MongoDB', 'Mongoose'],
   },
@@ -429,7 +445,6 @@ export const skillGroups: { title: string; caption: string; items: string[]; spa
   },
   {
     title: 'AI & LLMs',
-    span: 'sm:col-span-2',
     caption: 'Recent focus',
     items: ['OpenAI API', 'Natural-language reporting', 'AI agents', 'Agentic workflows'],
   },
@@ -445,7 +460,6 @@ export const skillGroups: { title: string; caption: string; items: string[]; spa
   },
   {
     title: 'Tools',
-    span: 'sm:col-span-2 lg:col-span-1',
     caption: 'Workflow',
     items: ['Git', 'GitHub', 'npm', 'VS Code'],
   },
@@ -531,24 +545,3 @@ export const stats: { value: string; label: string }[] = [
   { value: 'Apr ’24', label: 'Employee of the Month' },
 ]
 
-export const marqueeTech = [
-  'Angular',
-  'TypeScript',
-  'Node.js',
-  'Express.js',
-  'MongoDB',
-  'MySQL',
-  '.NET',
-  'SQL Server',
-  'REST APIs',
-  'RxJS',
-  'Angular Material',
-  'Electron',
-  'Shopify',
-  'WooCommerce',
-  'Daraz',
-  'JWT',
-  'OpenAI API',
-  'AI agents',
-  'Git',
-]

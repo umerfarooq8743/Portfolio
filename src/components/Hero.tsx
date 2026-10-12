@@ -1,110 +1,232 @@
-import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react'
-import { marqueeTech, profile, stats } from '../data/profile'
+import type { CSSProperties } from 'react'
+import { ArrowDown, ArrowUpRight, Bot, LayoutDashboard, RefreshCw, Truck } from 'lucide-react'
+import { profile, stats } from '../data/profile'
 import { ButtonLink } from './ui/Button'
-import { GitHubIcon, LinkedInIcon } from './ui/BrandIcons'
-import { IntegrationMap } from './IntegrationMap'
 
-const socialLink =
-  'grid size-11 place-items-center rounded-full border border-line text-fg-muted transition-colors hover:border-line-strong hover:bg-white/[0.05] hover:text-fg'
+const delay = (ms: number) => ({ '--intro-delay': `${ms}ms` }) as CSSProperties
+
+const capabilities = [
+  {
+    title: 'Sync orders & stock',
+    body: 'Orders and inventory kept in step across every selling channel.',
+    Icon: RefreshCw,
+    tags: ['Shopify', 'WooCommerce', 'Daraz', 'Splendid'],
+  },
+  {
+    title: 'Ship with 20+ couriers',
+    body: 'Booking, tracking and notifications through local couriers.',
+    Icon: Truck,
+    tags: ['TCS', 'Leopards', 'PostEx', '+ more'],
+  },
+  {
+    title: 'ERP frontends',
+    body: 'Invoices, returns, POS and reports — with role-based permissions.',
+    Icon: LayoutDashboard,
+    tags: ['Angular', 'POS', 'RBAC'],
+  },
+  {
+    title: 'AI on real data',
+    body: 'Natural-language reporting and agents that act on instructions.',
+    Icon: Bot,
+    tags: ['OpenAI API', 'Agents'],
+    ai: true,
+  },
+]
+
+/** Decorative route line: a shipment-style path between nodes, drawn once on load. */
+function RouteLine() {
+  const d = 'M20 300 C 120 300, 140 180, 250 180 S 380 250, 470 120 S 600 40, 700 60'
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 720 340"
+      fill="none"
+      className="pointer-events-none absolute -top-6 right-[-6rem] hidden w-[46rem] max-w-none opacity-70 lg:block"
+    >
+      <defs>
+        <linearGradient id="route-stroke" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#ff6b3d" stopOpacity="0" />
+          <stop offset="35%" stopColor="#ff6b3d" stopOpacity="0.55" />
+          <stop offset="100%" stopColor="#a9c1ff" stopOpacity="0.35" />
+        </linearGradient>
+      </defs>
+      <path d={d} stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+      <path d={d} stroke="url(#route-stroke)" strokeWidth="1.5" strokeDasharray="1200" strokeDashoffset="1200" className="route-draw" />
+      {[
+        [250, 180],
+        [470, 120],
+        [700, 60],
+      ].map(([cx, cy], i) => (
+        <g key={i} className="intro" style={delay(900 + i * 220)}>
+          <circle cx={cx} cy={cy} r="10" fill="rgba(255,107,61,0.08)" />
+          <circle cx={cx} cy={cy} r="3.5" fill={i === 2 ? '#a9c1ff' : '#ff6b3d'} />
+        </g>
+      ))}
+    </svg>
+  )
+}
 
 export function Hero() {
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative isolate overflow-hidden pt-28 sm:pt-36">
+    <section id="top" aria-labelledby="hero-title" className="relative isolate overflow-hidden pt-[calc(var(--header-h)+3rem)] pb-20 md:pt-[calc(var(--header-h)+3.5rem)] md:pb-28">
+      {/* Atmosphere: editorial column guides inside the content width + one warm light */}
+      <div aria-hidden="true" className="container-page absolute inset-x-0 top-0 -z-10 h-full">
+        <div className="column-guides h-full w-full border-x border-white/[0.04]" />
+      </div>
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 -top-32 -z-10 h-[40rem] bg-[radial-gradient(45%_55%_at_18%_10%,rgba(45,212,191,0.12),transparent_70%),radial-gradient(45%_55%_at_82%_20%,rgba(99,102,241,0.16),transparent_70%)]"
+        className="absolute -top-40 right-[-10%] -z-10 h-[42rem] w-[60rem] bg-[radial-gradient(closest-side,rgba(255,107,61,0.16),transparent)]"
       />
 
-      <div className="container-page grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
-        <div>
-          <p className="inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-white/[0.03] py-1.5 pr-4 pl-2 text-sm text-fg-muted backdrop-blur">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-300/10 px-2 py-0.5 font-mono text-[0.7rem] text-teal-200">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-teal-300" />
+      <div className="container-page relative">
+        <RouteLine />
+
+        {/* Status row */}
+        <div className="intro flex flex-wrap items-center justify-between gap-4" style={delay(0)}>
+          <p className="inline-flex items-center gap-3 rounded-full border border-line-strong bg-bg/60 py-1.5 pr-4 pl-2 text-sm text-fg-muted backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full bg-signal/[0.12] px-2.5 py-0.5 font-mono text-[0.68rem] tracking-[0.1em] text-signal-soft uppercase">
+              <span aria-hidden="true" className="live-dot size-1.5 rounded-full bg-signal" />
               Now
             </span>
             <span>
               Building <span className="text-fg">AI agents</span> for ShipKardo
-              <span className="hidden sm:inline"> at i-Splendid</span>
             </span>
           </p>
-
-          <h1
-            id="hero-title"
-            className="mt-7 text-[2.75rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance text-fg sm:text-6xl lg:text-[3.6rem] xl:text-[3.9rem]"
-          >
-            Hi, I’m Umer<span className="text-teal-300">.</span>
-            <span className="text-gradient mt-1 block pb-2 lg:whitespace-nowrap">Full-Stack Engineer</span>
-          </h1>
-
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-fg-muted">
-            I engineer scalable, production-grade business platforms on the{' '}
-            <span className="text-fg">MEAN stack</span> — Angular, Node.js, Express.js and MongoDB — with .NET, SQL
-            Server, MySQL and Electron in the toolkit. My work powers order management, ERP, event booking and
-            healthcare products: <span className="text-fg">20+ courier integrations</span>, multi-channel order sync
-            across Shopify, WooCommerce and Daraz, and now <span className="text-fg">AI</span> — natural-language
-            reporting and autonomous agents on the OpenAI API.
+          <p className="label hidden md:block">
+            {profile.location} <span className="text-fg-subtle/60">/</span> {profile.timezone}
           </p>
+        </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <ButtonLink href="#work" variant="accent">
-              View my work
-              <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
-            </ButtonLink>
-            <ButtonLink href="#contact" variant="secondary">
-              Let’s connect
-              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-            </ButtonLink>
-            <div className="flex items-center gap-2 sm:ml-2">
-              <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)" className={socialLink}>
-                <GitHubIcon className="size-[18px]" />
-              </a>
-              <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)" className={socialLink}>
-                <LinkedInIcon className="size-[17px]" />
-              </a>
+        {/* Headline */}
+        <h1 id="hero-title" className="mt-10 md:mt-12">
+          <span className="intro mb-5 block font-mono text-xs font-normal tracking-[0.04em] text-fg-muted sm:text-sm md:mb-6 md:text-base" style={delay(80)}>
+            Umer Farooq <span className="text-fg-subtle">—</span> Full-stack software engineer
+          </span>
+          <span className="intro text-display block text-fg" style={delay(160)}>
+            Building the software
+          </span>
+          <span className="intro text-display block text-fg" style={delay(260)}>
+            businesses{' '}
+            <span className="relative inline-block text-signal">
+              run on.
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 300 24"
+                preserveAspectRatio="none"
+                className="absolute -bottom-[0.12em] left-0 h-[0.16em] w-[96%] overflow-visible"
+              >
+                <path
+                  d="M3 16 C 60 6, 140 4, 200 9 S 280 18, 297 8"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                  pathLength="1"
+                  strokeDasharray="1"
+                  strokeDashoffset="1"
+                  className="underline-draw"
+                />
+              </svg>
+            </span>
+          </span>
+        </h1>
+
+        {/* Value + proof */}
+        <div className="mt-12 grid gap-14 md:mt-14 lg:grid-cols-12 lg:gap-8">
+          <div className="intro lg:col-span-6" style={delay(380)}>
+            <p className="text-lead max-w-[46ch] text-pretty text-fg-muted">
+              I build full-stack platforms that keep orders moving, stock accurate and teams in control — on{' '}
+              <span className="text-fg">Angular, Node.js, Express and MongoDB</span>. From{' '}
+              <span className="text-fg">20+ courier integrations</span> and multi-channel order sync to{' '}
+              <span className="text-fg">AI agents</span> on the OpenAI API.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <ButtonLink href="#work" size="lg">
+                See selected work
+                <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+              </ButtonLink>
+              <ButtonLink href="#contact" variant="secondary" size="lg">
+                Start a conversation
+                <ArrowUpRight
+                  className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </ButtonLink>
             </div>
           </div>
 
-          <p className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-fg-muted">
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin className="size-4 text-teal-300/80" aria-hidden="true" />
-              {profile.location}
-            </span>
-            <a href={`mailto:${profile.email}`} className="transition-colors hover:text-fg">
-              {profile.email}
-            </a>
-          </p>
+          <dl className="intro grid grid-cols-2 self-end border-t border-line lg:col-span-5 lg:col-start-8" style={delay(480)}>
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`flex flex-col gap-2 py-6 ${i % 2 === 1 ? 'border-l border-line pl-6' : 'pr-6'} ${
+                  i < 2 ? 'border-b border-line' : ''
+                }`}
+              >
+                <dt className="text-sm leading-snug text-fg-muted">{s.label}</dt>
+                <dd className="order-first font-display text-[2.4rem] leading-none font-semibold tracking-[-0.04em] text-fg sm:text-5xl">
+                  {s.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
-        <div className="relative">
-          <IntegrationMap />
-        </div>
-      </div>
-
-      {/* Proof points */}
-      <div className="container-page mt-20">
-        <dl className="ring-gradient grid grid-cols-2 overflow-hidden rounded-2xl bg-white/[0.02] lg:grid-cols-4">
-          {stats.map((s, i) => (
-            <div
-              key={s.label}
-              className={`flex flex-col-reverse p-5 sm:p-7 ${i % 2 === 1 ? 'border-l border-line' : ''} ${i >= 2 ? 'border-t border-line lg:border-t-0' : ''} ${i === 2 ? 'lg:border-l' : ''}`}
+        {/* Capability strip */}
+        <ul
+          className="intro mt-16 grid gap-px overflow-hidden rounded-[var(--radius-xl)] border border-line bg-line shadow-[var(--shadow-card)] sm:grid-cols-2 md:mt-24 lg:grid-cols-4"
+          style={delay(580)}
+        >
+          {capabilities.map(({ title, body, Icon, tags, ai }, i) => (
+            <li
+              key={title}
+              className="group relative flex flex-col bg-bg-raised p-6 transition-colors duration-500 hover:bg-surface sm:p-7"
             >
-              <dt className="mt-1.5 text-sm leading-snug text-fg-muted">{s.label}</dt>
-              <dd className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{s.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
+              {/* Hover: signal hairline + soft corner light */}
+              <span
+                aria-hidden="true"
+                className={`absolute inset-x-6 top-0 h-px scale-x-0 bg-gradient-to-r from-transparent to-transparent transition-transform duration-500 ease-[var(--ease-out-quart)] group-hover:scale-x-100 ${
+                  ai ? 'via-ice' : 'via-signal'
+                }`}
+              />
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none absolute -top-16 -right-16 size-40 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
+                  ai ? 'bg-[radial-gradient(closest-side,rgba(169,193,255,0.14),transparent)]' : 'bg-[radial-gradient(closest-side,rgba(255,107,61,0.14),transparent)]'
+                }`}
+              />
 
-      {/* Tech marquee (decorative; the full list lives in Skills) */}
-      <div aria-hidden="true" className="marquee mt-14 overflow-hidden border-y border-line py-5">
-        <div className="marquee-track flex w-max gap-10 pr-10">
-          {[...marqueeTech, ...marqueeTech].map((t, i) => (
-            <span key={i} className="flex items-center gap-10 font-mono text-sm tracking-wide whitespace-nowrap text-fg-subtle">
-              {t}
-              <span className="size-1 rounded-full bg-white/15" />
-            </span>
+              <div className="relative flex items-center justify-between">
+                <span
+                  className={`grid size-10 place-items-center rounded-xl border transition-colors duration-300 ${
+                    ai
+                      ? 'border-ice/25 bg-ice/[0.07] text-ice'
+                      : 'border-signal/25 bg-signal/[0.08] text-signal-soft group-hover:bg-signal/[0.14]'
+                  }`}
+                >
+                  <Icon className="size-[18px]" aria-hidden="true" />
+                </span>
+                <span className="font-mono text-[0.68rem] tracking-[0.12em] text-fg-subtle">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+
+              <p className="relative mt-6 font-display text-[1.2rem] leading-snug font-semibold tracking-[-0.02em] text-fg">{title}</p>
+              <p className="relative mt-2 text-[0.95rem] leading-relaxed text-pretty text-fg-muted">{body}</p>
+
+              <ul className="relative mt-auto flex flex-wrap gap-1.5 pt-6" aria-label={`${title}: examples`}>
+                {tags.map((t) => (
+                  <li
+                    key={t}
+                    className={`rounded-md border px-2 py-0.5 font-mono text-[0.68rem] ${
+                      ai ? 'border-ice/20 bg-ice/[0.05] text-ice/90' : 'border-line bg-white/[0.025] text-fg-muted'
+                    }`}
+                  >
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )
