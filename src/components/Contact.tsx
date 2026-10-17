@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Check, Copy } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, Download } from 'lucide-react'
 import { profile } from '../data/profile'
 import { Reveal } from './ui/Reveal'
 import { GitHubIcon, LinkedInIcon } from './ui/BrandIcons'
@@ -113,14 +113,22 @@ export function Contact() {
                   <span className="sr-only">(opens in a new tab)</span>
                 </a>
               ))}
-              <div className="flex items-center gap-4 rounded-[var(--radius-md)] border border-dashed border-line p-4 sm:col-span-2 lg:col-span-1">
-                <span className="min-w-0">
-                  <span className="label block">Based in</span>
-                  <span className="mt-1.5 block text-sm text-fg">
+              <a
+                href={profile.cv}
+                download
+                className="group flex items-center gap-4 rounded-[var(--radius-md)] border border-signal/30 bg-signal/[0.06] p-4 transition-colors hover:border-signal/60 hover:bg-signal/[0.1] sm:col-span-2 lg:col-span-1"
+              >
+                <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-signal text-signal-ink">
+                  <Download className="size-5 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-medium text-fg">Download CV</span>
+                  <span className="block text-sm text-fg-muted">PDF · 3 pages</span>
+                  <span className="mt-0.5 block text-xs text-fg-subtle">
                     {profile.location} · {profile.timezone}
                   </span>
                 </span>
-              </div>
+              </a>
             </div>
           </div>
         </Reveal>

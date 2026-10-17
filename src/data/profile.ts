@@ -1,9 +1,10 @@
 /**
  * Single source of truth for portfolio content.
  *
- * Everything here is taken from Umer's own brief, his public GitHub profile
- * README and his public repositories. Edit this file to update the site —
- * please keep it factual (no invented metrics, clients or links).
+ * Everything here is taken from Umer's own brief and CV, his public GitHub
+ * profile, the public product sites linked below and his own project
+ * repositories. Edit this file to update the site — please keep it factual
+ * (no invented metrics, clients or links).
  */
 
 export const profile = {
@@ -17,6 +18,7 @@ export const profile = {
   currentRole: 'Software Engineer at i-Splendid',
   email: 's.m.umerfarooq8743@gmail.com',
   photo: '/umer-farooq.jpg',
+  cv: '/Umer-Farooq-CV.pdf',
   links: {
     linkedin: 'https://www.linkedin.com/in/umerfarooq-dev',
     github: 'https://github.com/umerfarooq8743',
@@ -36,13 +38,16 @@ export const navItems = [
 /* Projects                                                            */
 /* ------------------------------------------------------------------ */
 
-export type ProjectVisualKind = 'oms' | 'accounts' | 'pos' | 'health' | 'booking' | 'desktop'
+export type ProjectVisualKind = 'oms' | 'accounts' | 'pos' | 'health' | 'booking' | 'desktop' | 'customs'
 
 export interface Project {
   id: string
   name: string
+  /** Previous product name, shown as "formerly …". */
+  formerly?: string
   kind: string
   context: string
+  period?: string
   status?: string
   /** Presentation tier: 'lead' = full-width case study, 'feature' = large two-up card, 'index' = compact row. */
   tier: 'lead' | 'feature' | 'index'
@@ -53,8 +58,14 @@ export interface Project {
   stack: string[]
   highlights: string[]
   visual: ProjectVisualKind
+  /** Countable facts shown as a stat row in the case study. */
+  metrics?: { value: string; label: string }[]
   caseStudy: {
     overview: string
+    /** Optional end-to-end workflow, rendered as an animated pipeline. */
+    flow?: { title: string; steps: string[] }
+    /** Optional grouped feature inventory ("What's inside"). */
+    capabilities?: { title: string; items: string[] }[]
     contribution: string[]
     involves?: { title: string; body: string }[]
     note: string
@@ -64,35 +75,54 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'shipkardo',
+    id: 'winqohub',
     tier: 'lead',
-    name: 'ShipKardo',
-    kind: 'Order Management System',
+    name: 'WinqoHub',
+    formerly: 'ShipKardo',
+    kind: 'AI-powered E-commerce Order Management',
     context: 'Professional · i-Splendid',
+    period: 'Sep 2023 — Present',
     problem:
-      'Merchants selling across several channels end up juggling orders, stock and a dozen courier portals separately.',
+      'Online sellers juggle orders, stock and a dozen courier portals separately — and lose money to overselling, late parcels and unreconciled COD.',
     summary:
-      'A full-stack order management platform that pulls orders in from every selling channel and ships them through 20+ courier integrations — with products and inventory kept in sync.',
+      'An order management platform that pulls orders in from every selling channel, ships them through 20+ couriers and keeps products and stock in sync — with an AI layer on top. I work on it across the entire stack.',
     role: 'Full-stack — frontend and backend',
-    stack: ['Angular', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'OpenAI API', 'REST APIs', 'SMTP'],
+    stack: ['Angular', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'OpenAI API', 'REST APIs', 'SMTP', 'SMS gateway'],
     highlights: [
       '20+ courier integrations, including BlueEx, TCS, Leopards, PostEx, M&P and Call Courier Trax',
-      'Selling-channel integrations: Shopify, WooCommerce, Daraz and Splendid Accounts',
-      'AI: natural-language reporting on the OpenAI API, and AI agents that act on instructions (in progress)',
+      'Selling-channel integrations: Shopify, WooCommerce / WordPress, Daraz and Splendid Accounts',
+      'AI: natural-language reporting on the OpenAI API, and AI agents that act on instructions',
     ],
     visual: 'oms',
+    metrics: [
+      { value: '20+', label: 'Couriers connected' },
+      { value: '5+', label: 'Selling channels' },
+      { value: '5M', label: 'Orders processed on the platform*' },
+      { value: '24/7', label: 'AI agent replies' },
+    ],
     caseStudy: {
       overview:
-        'Merchants who sell across several channels need one place to receive orders, manage their catalogue and dispatch parcels through local couriers. ShipKardo is the order management system i-Splendid builds for that workflow, and it is where I work across the entire stack.',
+        'WinqoHub (formerly ShipKardo) is the order management system i-Splendid builds for online sellers in Pakistan. Orders from every store land in one list, stock updates across channels when something sells, couriers are compared and booked in one click, parcels are tracked in one timeline and courier COD payments are matched back to orders. On top sits Winqo Agent, an AI that answers sales and support chats in English and Roman Urdu. I work across the whole stack — from MongoDB models and Express APIs to the Angular screens sellers use all day.',
+      flow: {
+        title: 'Order lifecycle',
+        steps: ['Channel order', 'Order hub', 'Stock sync', 'Courier booking', 'Live tracking', 'COD reconciliation', 'Reports'],
+      },
+      capabilities: [
+        { title: 'Orders & stock', items: ['Multi-store order inbox', 'Cross-channel stock sync', 'Product listings & updates', 'ERP sync with Splendid Accounts'] },
+        { title: 'Shipping', items: ['20+ courier APIs', 'One-click & bulk booking', 'Label printing', 'Unified tracking timeline'] },
+        { title: 'Notifications', items: ['SMTP email alerts', 'Transactional SMS (Monty Mobile)', 'Order status updates'] },
+        { title: 'AI', items: ['Natural-language reporting', 'Autonomous AI agents', 'OpenAI API'] },
+      ],
       contribution: [
         'Develop and maintain features on both the Angular frontend and the Node.js / Express.js backend, with MongoDB as the data layer.',
         'Integrated 20+ courier services — including BlueEx, TCS, Leopards, PostEx, M&P and Call Courier Trax — into the shipping workflow.',
-        'Integrated selling channels — Shopify, WooCommerce, Daraz and Splendid Accounts — for automated order synchronization.',
-        'Built product management features: product listings, product updates and inventory synchronization.',
-        'Implemented SMTP-based email notifications.',
+        'Integrated selling channels — Shopify, WooCommerce / WordPress and Daraz — for automated order synchronization.',
+        'Built the integration between WinqoHub and the Splendid Accounts inventory system for real-time inventory management.',
+        'Built complete product management modules: product listings, product updates and inventory synchronization.',
+        'Implemented SMTP email notifications and transactional SMS through Monty Mobile for order and system alerts.',
         'Built Natural Language Reporting (NLR) with the OpenAI API, so users can ask for reports in plain language instead of navigating filters.',
-        'Worked on agentic AI across the project — and currently building AI agents inside ShipKardo that are given instructions for a task and make their own decisions to carry it out.',
-        'Debug production issues and improve existing functionality together with the team.',
+        'Building AI agents inside WinqoHub that are given a task and decide their own steps to carry it out.',
+        'Take part in architecture planning, code reviews and performance optimization with the team.',
       ],
       involves: [
         {
@@ -112,7 +142,79 @@ export const projects: Project[] = [
           body: 'Working on both sides of the API means a feature is designed once — from the MongoDB data it needs, through Express routes, to the Angular screens that use it.',
         },
       ],
-      note: 'ShipKardo is a proprietary product. Source code, internal implementation details and customer data are intentionally not shown here.',
+      note: 'WinqoHub is a proprietary product. *Platform figures are as published on the product website. Source code, internal implementation details and customer data are intentionally not shown here.',
+    },
+    links: [{ label: 'Visit WinqoHub', href: 'https://winqoai.com/hub/' }],
+  },
+  {
+    id: 'clearport',
+    tier: 'feature',
+    name: 'ClearPort ERP',
+    kind: 'Customs Clearing & Freight Forwarding ERP',
+    context: 'Independent build',
+    period: '2026',
+    status: 'New',
+    problem:
+      'Clearing agents follow every shipment through a dozen documents — BL, GD, DO, NOC, gate passes, vouchers and bills — usually across paper files and spreadsheets.',
+    summary:
+      'A multi-tenant SaaS ERP for customs clearing and freight forwarding in Pakistan that carries a shipment from bill of lading to final bill — all linked by one job-file number.',
+    role: 'Full-stack — architecture, API and web app',
+    stack: ['React 18', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL 16', 'Prisma', 'TanStack Query', 'Tailwind CSS', 'Socket.IO', 'BullMQ', 'Docker'],
+    highlights: [
+      '12-stage clearing pipeline: ETA → job file → GD / DO / NOC → gate pass → delivery → billing → SOA',
+      'Multi-tenant with company isolation, RBAC, rotating refresh tokens and TOTP 2FA',
+      'Real-time alerts, background jobs, PDF documents and Excel exports',
+    ],
+    visual: 'customs',
+    metrics: [
+      { value: '12', label: 'Pipeline stages' },
+      { value: '22', label: 'API modules' },
+      { value: '3', label: 'Apps & packages in the monorepo' },
+      { value: '2FA', label: 'TOTP, AES-256-GCM secrets' },
+    ],
+    caseStudy: {
+      overview:
+        'ClearPort is a multi-tenant ERP for customs-clearing and freight-forwarding companies in Pakistan. Each company gets its own isolated workspace; inside it, a shipment moves from bill of lading and ETA to job file, goods declaration, assessment, delivery order and NOC, gate pass, delivery, vouchers, bill and statement of account — every step linked by the same job-file number, so nothing has to be re-typed. I designed and built it end to end: the PostgreSQL schema, the Express API, the React web app and the shared validation and permission layer between them.',
+      flow: {
+        title: 'Shipment pipeline',
+        steps: ['BL', 'ETA', 'Job file', 'GD / SO / Scanning', 'Assessment', 'DO + NOC', 'Gate pass', 'Delivery', 'Vouchers', 'Bill', 'SOA', 'Close'],
+      },
+      capabilities: [
+        { title: 'Operations', items: ['ETA tracking', 'Job files', 'GD, DO & NOC pipeline', 'Transport & gate passes'] },
+        { title: 'Finance', items: ['Vouchers & expenses', 'Billing & invoices', 'Payments', 'Statement of account'] },
+        { title: 'Platform', items: ['Company onboarding & invitations', 'Roles & permissions', 'Activity log', 'Notifications'] },
+        { title: 'Output', items: ['PDF documents (Puppeteer)', 'Excel exports', 'Reports & dashboards', 'Full-text search'] },
+      ],
+      contribution: [
+        'Designed a multi-tenant data model on PostgreSQL 16 with Prisma, with every record scoped to a company and a separate platform super-admin area.',
+        'Built a pnpm + Turborepo monorepo: Express API, React web app and a shared package of Zod schemas and the RBAC matrix used by both sides.',
+        'Implemented authentication with 15-minute access tokens, hashed 7-day refresh tokens rotated on every use (reuse revokes the whole session family) and TOTP 2FA with AES-256-GCM encrypted secrets.',
+        'Generated race-free customer codes, ETA references and job numbers from per-company sequence tables with ON CONFLICT and FOR UPDATE locking.',
+        'Added full-text search with pg_trgm and GIN indexes, real-time notifications over Socket.IO and background jobs on BullMQ for email and daily expiry digests.',
+        'Produced print-ready documents with Puppeteer and pdf-lib, and Excel exports with ExcelJS.',
+        'Built structured logging: request IDs on every response and error, user and company context via AsyncLocalStorage, slow-query warnings, secret redaction and browser error reporting.',
+        'Built the web app with React, TanStack Router / Query / Table, Tailwind CSS and shadcn/ui, with forms on React Hook Form and Zod.',
+        'Containerised the stack with Docker Compose and wrote an idempotent seed with three demo companies and six months of realistic data.',
+      ],
+      involves: [
+        {
+          title: 'One number ties it together',
+          body: 'Every document in a clearing job references the same job file. Making that link the backbone of the schema is what lets a voucher, a gate pass and a bill all trace back to one shipment.',
+        },
+        {
+          title: 'Tenants that never leak',
+          body: 'Several companies share one database. Company scoping has to be enforced everywhere — queries, files, sockets and logs — not just remembered in the UI.',
+        },
+        {
+          title: 'Security as a feature',
+          body: 'Rotating refresh tokens with reuse detection, encrypted 2FA secrets and a permission matrix shared between API and UI keep a multi-company system safe to hand to real staff.',
+        },
+        {
+          title: 'Observable from day one',
+          body: 'Request IDs, structured logs and an activity log mean every error a user reports can be traced to the exact request, user and company behind it.',
+        },
+      ],
+      note: 'ClearPort ERP is in a private repository. Company names in the demo data are fictional.',
     },
     links: [],
   },
@@ -122,10 +224,11 @@ export const projects: Project[] = [
     name: 'Splendid Accounts',
     kind: 'Complete ERP Solution',
     context: 'Professional · i-Splendid',
+    period: 'Mar 2023 — Jun 2023',
     problem:
       'Small and medium-sized businesses need sales, purchasing, stock, accounting and POS in one place they can reach from any device.',
     summary:
-      'A complete online ERP for small and medium-sized businesses in Pakistan — sales, purchase, inventory, accounting, manufacturing, POS and financial reporting, with multi-currency support and real-time access from any device. I build its Angular frontend, including the role and permission system.',
+      'A complete online ERP for small and medium-sized businesses in Pakistan — sales, purchase, inventory, accounting, manufacturing, POS and financial reporting, with multi-currency support and real-time access from any device. I worked on its Angular frontend, including the role and permission system.',
     role: 'Frontend — Angular',
     stack: ['Angular', 'TypeScript', 'RxJS', 'HTML5', 'CSS3', 'REST APIs'],
     highlights: [
@@ -137,6 +240,12 @@ export const projects: Project[] = [
     caseStudy: {
       overview:
         'Splendid Accounts is an online inventory management and accounting software — a complete ERP — designed for small and medium-sized businesses in Pakistan. It covers Sales, Purchase, Inventory, Accounting, Manufacturing and POS, with ledgers, trial balance, aging reports, income statement and balance sheet, plus multi-currency support. Users log in from a Mac, PC, tablet or phone to get a real-time view of their business. My role is on the Angular frontend that those users work in every day.',
+      capabilities: [
+        { title: 'Sales', items: ['Sale invoices', 'Sale returns', 'Point of sale'] },
+        { title: 'Purchase', items: ['Purchase invoices', 'Purchase returns'] },
+        { title: 'Insight', items: ['Inventory', 'CRM', 'Profit & loss'] },
+        { title: 'Access', items: ['Roles', 'Permissions', 'Rights per module'] },
+      ],
       contribution: [
         'Sales modules: sale invoices and sale returns.',
         'Purchase modules: purchase invoices and purchase returns.',
@@ -166,8 +275,66 @@ export const projects: Project[] = [
     links: [{ label: 'Product website', href: 'https://splendidaccounts.com/' }],
   },
   {
-    id: 'mounties',
+    id: 'robeapp',
     tier: 'feature',
+    name: 'RobeApp',
+    kind: 'Tailoring Business Management & POS',
+    context: 'Personal project · for a cloth & tailoring brand',
+    status: 'Active development',
+    problem:
+      'A cloth and tailoring business has to track customer measurements, fabric sold by the meter, orders, staff wages and money owed — usually in registers that never add up.',
+    summary:
+      'A complete management system for a cloth & tailoring brand — customers with garment measurements, meter-based stock, sale and purchase invoices, payments, staff loans and wages, expenses and 14 reports — on Angular 18 and a Node.js API.',
+    role: 'Full-stack developer',
+    stack: ['Angular 18', 'Angular Material', 'Chart.js', 'Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'JWT', 'PDFKit', 'ExcelJS', 'Jest'],
+    highlights: [
+      'Customer measurements per garment — shalwar kameez, kurta pajama, coat, waistcoat — with full history',
+      'Sale & purchase invoices that keep stock, customer balances and payments in sync',
+      'Roles & permissions, audit log, dashboard KPIs and 14 business reports',
+    ],
+    visual: 'pos',
+    metrics: [
+      { value: '14', label: 'Business reports' },
+      { value: '16', label: 'API resources' },
+      { value: '12', label: 'Data models' },
+      { value: '26', label: 'Audit findings reviewed' },
+    ],
+    caseStudy: {
+      overview:
+        'RobeApp runs the day-to-day of a cloth and tailoring brand. A customer record holds structured measurements for each garment type with a complete history, and a single sale invoice can carry measurements for several family members. Fabric is stocked in meters with low-stock alerts, every sale, purchase and payment moves stock and balances automatically, and staff loans, wages and expenses sit in the same ledger. A dashboard and 14 reports — from daily sales to profit & loss — show the owner where the business stands.',
+      capabilities: [
+        { title: 'Customers', items: ['Garment measurements', 'Measurement history', 'Balances & ledgers'] },
+        { title: 'Sales & stock', items: ['Sale & purchase invoices', 'Meter-based inventory', 'Low-stock alerts', 'PDF invoices'] },
+        { title: 'People & money', items: ['Payments', 'Employee loans & wages', 'Expenses', 'Vendors'] },
+        { title: 'Control', items: ['Roles & permissions', 'Activity log', 'Dashboard KPIs', '14 reports + Excel export'] },
+      ],
+      contribution: [
+        'Built the Angular 18 frontend: 13 feature modules on a shared design system of reusable UI components, with light and dark themes.',
+        'Built the Node.js / Express.js API on MongoDB with Mongoose — 16 resources and 12 data models.',
+        'Made every money and stock movement symmetric: invoice edits and deletes revert the old stock and balances before applying the new ones, using atomic $inc updates.',
+        'Recomputed invoice totals on the server, so client-side numbers are never trusted.',
+        'Hardened security: per-request active-user checks, token versioning on password change, admin-only destructive routes and whitelisted query filters against operator injection.',
+        'Added roles & permissions, an activity log on every key screen and a business-settings module that drives the invoice PDF.',
+        'Built a dashboard with KPIs, sparklines and period switching, plus 14 reports with date-range presets and Excel export.',
+        'Ran a full engineering review — 26 findings ranked by severity — and fixed them in phases, backed by Jest tests.',
+      ],
+      involves: [
+        {
+          title: 'Money that must balance',
+          body: 'A sale touches stock, the customer’s balance and payments at once. If edits and deletes don’t undo exactly what they did, the books quietly drift.',
+        },
+        {
+          title: 'Measurements are data',
+          body: 'Tailoring depends on exact measurements per garment and per person. Modelling them as structured, versioned data is what makes repeat orders easy.',
+        },
+      ],
+      note: 'RobeApp is in a private repository and is still being extended, so there is no public demo link.',
+    },
+    links: [],
+  },
+  {
+    id: 'mounties',
+    tier: 'index',
     name: 'Mounties',
     kind: 'Event & Play-Area Booking Portal',
     context: 'Professional · i-Splendid · Australian client',
@@ -205,43 +372,12 @@ export const projects: Project[] = [
     links: [],
   },
   {
-    id: 'robeapp',
-    tier: 'index',
-    name: 'RobeApp',
-    kind: 'POS & Tailoring Management System',
-    context: 'Personal project',
-    status: 'In development',
-    problem:
-      'A tailoring business needs point of sale, invoicing, stock, customers, staff and vendors managed in one system.',
-    summary:
-      'A point-of-sale and tailoring management system, built on the MEAN stack with Angular 18 on the frontend and a JWT-secured Node.js API.',
-    role: 'Full-stack developer',
-    stack: ['Angular 18', 'Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'JWT'],
-    highlights: [
-      'JWT-based authentication on an Express.js API',
-      'Product, inventory, invoice, payment and customer modules',
-      'Employee, vendor and reporting modules in scope',
-    ],
-    visual: 'pos',
-    caseStudy: {
-      overview:
-        'RobeApp is a POS and tailoring management system I am building to cover the day-to-day running of a tailoring business — from selling and invoicing to tracking stock, customers and staff.',
-      contribution: [
-        'Angular 18 frontend backed by a Node.js / Express.js API.',
-        'MongoDB with Mongoose models for the application’s data.',
-        'JWT-based authentication.',
-        'Planned module scope: products, inventory, invoices, payments, customers, employees, vendors and reporting.',
-      ],
-      note: 'RobeApp is still under development and is not publicly available yet, so there is no repository or demo link. Features are described as scope, not as finished production functionality.',
-    },
-    links: [],
-  },
-  {
     id: 'nursenova',
     tier: 'index',
     name: 'NurseNova',
     kind: 'Healthcare Platform — Admin Panel & APIs',
     context: 'Professional · i-Splendid',
+    period: 'Jun 2023 — Sep 2023',
     problem:
       'Families need a simple way to find the right doctor, book appointments and keep track of everyone’s medication.',
     summary:
@@ -333,6 +469,7 @@ export interface Role {
   shared?: string[]
   recognition?: string
   sites?: { name: string; url?: string; description: string; tags?: string[] }[]
+  points?: string[]
 }
 
 export const experience: Role[] = [
@@ -346,15 +483,15 @@ export const experience: Role[] = [
       'Developing and maintaining web, desktop and AI-powered applications across i-Splendid’s products and client projects — primarily on Angular, Node.js, Express.js and MongoDB, with .NET, SQL Server, MySQL and Electron where the project calls for it.',
     tracks: [
       {
-        name: 'ShipKardo',
+        name: 'WinqoHub',
         focus: 'Full stack',
         points: [
-          'Frontend and backend development of the order management system',
+          'Frontend and backend of the order management system (formerly ShipKardo)',
           '20+ courier integrations, including BlueEx, TCS, Leopards, PostEx, M&P and Call Courier Trax',
-          'Selling channels: Shopify, WooCommerce, Daraz and Splendid Accounts',
+          'Selling channels: Shopify, WooCommerce / WordPress, Daraz — and real-time inventory sync with Splendid Accounts',
           'Product listings, updates and inventory synchronization',
-          'SMTP-based email notifications',
-          'AI: natural-language reporting (OpenAI API) and autonomous AI agents — in progress',
+          'SMTP email notifications and transactional SMS via Monty Mobile',
+          'AI: natural-language reporting (OpenAI API) and autonomous AI agents',
         ],
       },
       {
@@ -389,8 +526,8 @@ export const experience: Role[] = [
       },
     ],
     shared: [
-      'Debugging application issues and improving existing functionality',
-      'Collaborating with teammates to maintain production features',
+      'Architecture planning, code reviews and performance optimization',
+      'Testing, debugging and continuous improvement of production features',
     ],
     recognition: 'Employee of the Month · Apr 2024',
   },
@@ -400,7 +537,7 @@ export const experience: Role[] = [
     period: 'Nov 2022 — Mar 2023',
     start: '2022-11',
     summary:
-      'Built WordPress websites for 3DM Solutions’ clients — product catalogues and company sites for laboratory, diagnostics and scientific-supply businesses, plus several other WordPress builds.',
+      'Built responsive websites for 3DM Solutions’ clients — WordPress product catalogues and company sites for laboratory, diagnostics and scientific-supply businesses — with HTML, CSS, Bootstrap and JavaScript, tuned for performance and SEO.',
     sites: [
       {
         name: 'Summit Diagnostix',
@@ -421,6 +558,29 @@ export const experience: Role[] = [
       },
     ],
   },
+  {
+    company: 'Service4Digital',
+    title: 'Software Engineer Intern',
+    period: 'May 2022 — Nov 2022',
+    start: '2022-05',
+    summary:
+      'Started out on real client projects: front-end features and UI improvements with HTML, CSS, Bootstrap and JavaScript, alongside senior developers.',
+    points: [
+      'Implemented new features, UI improvements and bug fixes across ongoing projects',
+      'Debugging, testing and troubleshooting for stable application performance',
+      'Hands-on with the full software development lifecycle — development, testing and deployment',
+    ],
+  },
+]
+
+export const education: { degree: string; school: string; period: string }[] = [
+  { degree: 'BS in Computer Science', school: 'University of Karachi', period: '2019 — 2023' },
+  { degree: 'Intermediate', school: 'Govt. Degree College, Malir Cantt', period: '2016 — 2018' },
+]
+
+export const credentials: { title: string; issuer: string; year?: string }[] = [
+  { title: 'Employee of the Month', issuer: 'i-Splendid', year: 'Apr 2024' },
+  { title: 'Intermediate JavaScript Development', issuer: 'Udemy' },
 ]
 
 /* ------------------------------------------------------------------ */
@@ -436,12 +596,12 @@ export const skillGroups: { title: string; caption: string; items: string[] }[] 
   {
     title: 'Frontend & desktop',
     caption: 'Interfaces & tooling',
-    items: ['HTML5', 'CSS3', 'Responsive UI', 'RxJS', 'Angular Material', 'AG Grid', 'Electron', 'WordPress', 'Elementor'],
+    items: ['React', 'RxJS', 'Angular Material', 'Tailwind CSS', 'TanStack Query', 'HTML5', 'CSS3', 'Bootstrap', 'Chart.js', 'AG Grid', 'Electron', 'WordPress'],
   },
   {
     title: 'Backend & APIs',
     caption: 'Server-side work',
-    items: ['REST API development', 'APIs for mobile apps', '.NET', 'JWT authentication', 'Roles & permissions (RBAC)', 'Third-party API integration'],
+    items: ['REST API development', 'APIs for mobile apps', '.NET', 'JWT & 2FA', 'Roles & permissions (RBAC)', 'Socket.IO', 'BullMQ & Redis', 'PDF & Excel generation'],
   },
   {
     title: 'AI & LLMs',
@@ -451,21 +611,21 @@ export const skillGroups: { title: string; caption: string; items: string[] }[] 
   {
     title: 'Integrations',
     caption: 'Systems I’ve connected',
-    items: ['Shopify', 'WooCommerce', 'Daraz', 'Splendid Accounts', '20+ courier APIs', 'SMTP email', 'SMS gateway'],
+    items: ['Shopify', 'WooCommerce', 'Daraz', 'Splendid Accounts', '20+ courier APIs', 'SMTP email', 'SMS (Monty Mobile)'],
   },
   {
     title: 'Databases',
     caption: 'Data layer',
-    items: ['MongoDB', 'MySQL', 'SQL Server', 'PostgreSQL'],
+    items: ['MongoDB', 'PostgreSQL', 'Prisma', 'MySQL', 'SQL Server'],
   },
   {
     title: 'Tools',
     caption: 'Workflow',
-    items: ['Git', 'GitHub', 'npm', 'VS Code'],
+    items: ['Git', 'GitHub', 'npm & pnpm', 'Docker', 'Jest', 'VS Code'],
   },
 ]
 
-export const alsoExplored = ['React', 'Flutter', 'Python · Flask', 'PHP']
+export const alsoExplored = ['Flutter', 'Python · Flask', 'PHP']
 
 /* ------------------------------------------------------------------ */
 /* Engineering approach                                                */
@@ -474,24 +634,24 @@ export const alsoExplored = ['React', 'Flutter', 'Python · Flask', 'PHP']
 export const approach: { title: string; body: string; wide?: boolean }[] = [
   {
     title: 'Bringing AI into business software',
-    body: 'In ShipKardo I built natural-language reporting on the OpenAI API, and I’m now building AI agents that take an instruction, decide the steps themselves and carry the task out. The interesting part isn’t the model call — it’s giving the agent the right tools, the right limits and output a business can rely on.',
+    body: 'In WinqoHub I built natural-language reporting on the OpenAI API, and I’m now building AI agents that take an instruction, decide the steps themselves and carry the task out. The interesting part isn’t the model call — it’s giving the agent the right tools, the right limits and output a business can rely on.',
     wide: true,
   },
   {
     title: 'Integrating third-party services',
-    body: 'Couriers, selling channels and email providers all speak slightly different languages. I map them into one consistent workflow, so the people using the app never have to think about which service is behind a button.',
+    body: 'Couriers, selling channels, SMS and email providers all speak slightly different languages. I map them into one consistent workflow, so the people using the app never have to think about which service is behind a button.',
   },
   {
     title: 'Keeping data in sync',
-    body: 'Orders, products and stock move between selling channels and the order system. I think through what happens when an update arrives late, twice or not at all — before it becomes a support ticket.',
+    body: 'Orders, products, stock and balances move between systems. I think through what happens when an update arrives late, twice or not at all — and make every edit reversible — before it becomes a support ticket.',
   },
   {
-    title: 'Permission-aware Angular interfaces',
-    body: 'Components, services and forms structured so features can grow without copy-paste — invoices, ledgers, POS and grids — with roles and permissions enforced consistently across every screen and action.',
+    title: 'Permission-aware interfaces',
+    body: 'Components, services and forms structured so features can grow without copy-paste — invoices, ledgers, POS and grids — with roles and permissions enforced consistently across every screen, action and API.',
   },
   {
     title: 'Features from database to screen',
-    body: 'Comfortable taking a feature from a MongoDB model through Express routes to the Angular view that uses it — and debugging it across all three once it’s live.',
+    body: 'Comfortable taking a feature from a MongoDB or PostgreSQL model through Express routes to the Angular or React view that uses it — and debugging it across all three once it’s live.',
   },
 ]
 
@@ -541,7 +701,6 @@ export const repos: { name: string; title: string; description: string; tags: st
 export const stats: { value: string; label: string }[] = [
   { value: '3+', label: 'Years of production experience' },
   { value: '20+', label: 'Courier integrations shipped' },
-  { value: '6', label: 'Products & platforms worked on' },
+  { value: '7', label: 'Products & platforms built' },
   { value: 'Apr ’24', label: 'Employee of the Month' },
 ]
-

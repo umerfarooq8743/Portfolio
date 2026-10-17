@@ -1,7 +1,10 @@
-import type { CSSProperties } from 'react'
-import { ArrowDown, ArrowUpRight, Bot, LayoutDashboard, RefreshCw, Truck } from 'lucide-react'
+import type { CSSProperties, PointerEvent } from 'react'
+import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
+import { ArrowDown, Bot, Download, LayoutDashboard, RefreshCw, Truck } from 'lucide-react'
 import { profile, stats } from '../data/profile'
+import { spotlight } from '../hooks/useSpotlight'
 import { ButtonLink } from './ui/Button'
+import { CountUp } from './ui/CountUp'
 
 const delay = (ms: number) => ({ '--intro-delay': `${ms}ms` }) as CSSProperties
 
@@ -20,9 +23,9 @@ const capabilities = [
   },
   {
     title: 'ERP frontends',
-    body: 'Invoices, returns, POS and reports — with role-based permissions.',
+    body: 'Accounting, customs-clearing and tailoring ERPs — with role-based permissions.',
     Icon: LayoutDashboard,
-    tags: ['Angular', 'POS', 'RBAC'],
+    tags: ['Angular', 'React', 'POS', 'RBAC'],
   },
   {
     title: 'AI on real data',
@@ -66,16 +69,59 @@ function RouteLine() {
   )
 }
 
-export function Hero() {
+/** Splits a line into words that rise into place one after another. */
+function Words({ text, start }: { text: string; start: number }) {
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative isolate overflow-hidden pt-[calc(var(--header-h)+3rem)] pb-20 md:pt-[calc(var(--header-h)+3.5rem)] md:pb-28">
+    <>
+      {text.split(' ').map((w, i) => (
+        <span key={i} className="inline-block overflow-hidden pb-[0.1em] align-bottom">
+          <motion.span
+            className="inline-block"
+            initial={{ y: '110%', rotate: 4 }}
+            animate={{ y: 0, rotate: 0 }}
+            transition={{ duration: 1, ease: [0.25, 1, 0.5, 1], delay: start + i * 0.08 }}
+          >
+            {w}
+          </motion.span>
+          {'\u00a0'}
+        </span>
+      ))}
+    </>
+  )
+}
+
+export function Hero() {
+  // Pointer parallax for the warm light behind the headline.
+  const mx = useMotionValue(0)
+  const my = useMotionValue(0)
+  const sx = useSpring(mx, { stiffness: 40, damping: 20 })
+  const sy = useSpring(my, { stiffness: 40, damping: 20 })
+  const glowX = useTransform(sx, (v) => v * 60)
+  const glowY = useTransform(sy, (v) => v * 40)
+  const onMove = (e: PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse') return
+    mx.set(e.clientX / window.innerWidth - 0.5)
+    my.set(e.clientY / window.innerHeight - 0.5)
+  }
+
+  return (
+    <section
+      id="top"
+      aria-labelledby="hero-title"
+      onPointerMove={onMove}
+      className="relative isolate overflow-hidden pt-[calc(var(--header-h)+3rem)] pb-20 md:pt-[calc(var(--header-h)+3.5rem)] md:pb-28"
+    >
       {/* Atmosphere: editorial column guides inside the content width + one warm light */}
       <div aria-hidden="true" className="container-page absolute inset-x-0 top-0 -z-10 h-full">
         <div className="column-guides h-full w-full border-x border-white/[0.04]" />
       </div>
-      <div
+      <motion.div aria-hidden="true" style={{ x: glowX, y: glowY }} className="absolute -top-40 right-[-10%] -z-10 h-[42rem] w-[60rem]">
+        <div className="aurora size-full bg-[radial-gradient(closest-side,rgba(255,107,61,0.18),transparent)]" />
+      </motion.div>
+      <motion.div
         aria-hidden="true"
-        className="absolute -top-40 right-[-10%] -z-10 h-[42rem] w-[60rem] bg-[radial-gradient(closest-side,rgba(255,107,61,0.16),transparent)]"
+        style={{ x: useTransform(sx, (v) => v * -50), y: useTransform(sy, (v) => v * -30) }}
+        className="absolute top-[30%] left-[-15%] -z-10 h-[30rem] w-[40rem] bg-[radial-gradient(closest-side,rgba(169,193,255,0.07),transparent)]"
       />
 
       <div className="container-page relative">
@@ -89,7 +135,7 @@ export function Hero() {
               Now
             </span>
             <span>
-              Building <span className="text-fg">AI agents</span> for ShipKardo
+              Building <span className="text-fg">AI agents</span> for WinqoHub
             </span>
           </p>
           <p className="label hidden md:block">
@@ -102,12 +148,17 @@ export function Hero() {
           <span className="intro mb-5 block font-mono text-xs font-normal tracking-[0.04em] text-fg-muted sm:text-sm md:mb-6 md:text-base" style={delay(80)}>
             Umer Farooq <span className="text-fg-subtle">—</span> Full-stack software engineer
           </span>
-          <span className="intro text-display block text-fg" style={delay(160)}>
-            Building the software
+          <span className="text-display block text-fg">
+            <Words text="Building the software" start={0.15} />
           </span>
-          <span className="intro text-display block text-fg" style={delay(260)}>
-            businesses{' '}
-            <span className="relative inline-block text-signal">
+          <span className="text-display block text-fg">
+            <Words text="businesses" start={0.4} />
+            <motion.span
+              className="relative inline-block text-signal"
+              initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 1, ease: [0.25, 1, 0.5, 1], delay: 0.55 }}
+            >
               run on.
               <svg
                 aria-hidden="true"
@@ -127,7 +178,7 @@ export function Hero() {
                   className="underline-draw"
                 />
               </svg>
-            </span>
+            </motion.span>
           </span>
         </h1>
 
@@ -145,12 +196,9 @@ export function Hero() {
                 See selected work
                 <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
               </ButtonLink>
-              <ButtonLink href="#contact" variant="secondary" size="lg">
-                Start a conversation
-                <ArrowUpRight
-                  className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  aria-hidden="true"
-                />
+              <ButtonLink href={profile.cv} download variant="secondary" size="lg">
+                Download CV
+                <Download className="size-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
               </ButtonLink>
             </div>
           </div>
@@ -165,7 +213,7 @@ export function Hero() {
               >
                 <dt className="text-sm leading-snug text-fg-muted">{s.label}</dt>
                 <dd className="order-first font-display text-[2.4rem] leading-none font-semibold tracking-[-0.04em] text-fg sm:text-5xl">
-                  {s.value}
+                  <CountUp value={s.value} />
                 </dd>
               </div>
             ))}
@@ -180,7 +228,8 @@ export function Hero() {
           {capabilities.map(({ title, body, Icon, tags, ai }, i) => (
             <li
               key={title}
-              className="group relative flex flex-col bg-bg-raised p-6 transition-colors duration-500 hover:bg-surface sm:p-7"
+              onPointerMove={spotlight}
+              className="spotlight group relative flex flex-col bg-bg-raised p-6 transition-colors duration-500 hover:bg-surface sm:p-7"
             >
               {/* Hover: signal hairline + soft corner light */}
               <span
@@ -198,7 +247,7 @@ export function Hero() {
 
               <div className="relative flex items-center justify-between">
                 <span
-                  className={`grid size-10 place-items-center rounded-xl border transition-colors duration-300 ${
+                  className={`grid size-10 place-items-center rounded-xl border transition-[background-color,transform] duration-500 group-hover:-rotate-6 group-hover:scale-110 ${
                     ai
                       ? 'border-ice/25 bg-ice/[0.07] text-ice'
                       : 'border-signal/25 bg-signal/[0.08] text-signal-soft group-hover:bg-signal/[0.14]'

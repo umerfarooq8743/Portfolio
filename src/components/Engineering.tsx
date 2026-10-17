@@ -20,7 +20,7 @@ export function Engineering() {
               The hard problems live <span className="text-fg-muted">between systems.</span>
             </>
           }
-          intro="Most of my work happens where one system meets another — selling channels, couriers, ledgers, mobile apps and now AI. This is what that looks like in ShipKardo, and how I approach it."
+          intro="Most of my work happens where one system meets another — selling channels, couriers, ledgers, mobile apps and now AI. This is what that looks like in WinqoHub, and how I approach it."
         />
 
         <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
