@@ -49,6 +49,11 @@ export function Footer() {
                 <span className="sr-only">(opens in a new tab)</span>
               </a>
             </li>
+            <li>
+              <a href={profile.cv} download className={`inline-flex items-center gap-1.5 ${linkClass}`}>
+                Download CV
+              </a>
+            </li>
             <li className="text-fg-subtle">
               {profile.location} · {profile.timezone}
             </li>

@@ -1,5 +1,5 @@
 /**
- * Illustrative diagram of the integrations around ShipKardo: selling channels
+ * Illustrative diagram of the integrations around WinqoHub: selling channels
  * feed orders into the order hub, which books shipments with couriers and sends
  * notifications, with an AI layer on top. It shows *which* services are
  * integrated — not internal architecture.
@@ -12,7 +12,7 @@ const channels = ['Shopify', 'WooCommerce', 'Daraz', 'Splendid Accounts']
 const courierNames = ['BlueEx', 'TCS', 'Leopards', 'PostEx', 'M&P', 'Call Courier Trax']
 const notifyItems = [
   { label: 'Email', sub: 'SMTP' },
-  { label: 'SMS', sub: 'gateway' },
+  { label: 'SMS', sub: 'Monty Mobile' },
 ]
 
 /* ---------- SVG geometry ---------- */
@@ -54,9 +54,9 @@ const sans = 'var(--font-sans)'
 function MapSvg() {
   return (
     <svg viewBox="0 0 642 380" className="h-auto w-full" role="img" aria-labelledby="map-title map-desc">
-      <title id="map-title">ShipKardo integration map</title>
+      <title id="map-title">WinqoHub integration map</title>
       <desc id="map-desc">
-        Orders from Shopify, WooCommerce, Daraz and Splendid Accounts flow into the ShipKardo order hub, which books
+        Orders from Shopify, WooCommerce, Daraz and Splendid Accounts flow into the WinqoHub order hub, which books
         shipments through more than 20 couriers including BlueEx, TCS, Leopards, PostEx, M&amp;P and Call Courier Trax,
         and sends email and SMS notifications. An AI layer on the OpenAI API adds natural-language reporting and AI
         agents.
@@ -103,7 +103,7 @@ function MapSvg() {
         ORDER HUB
       </text>
       <text x={HUB.x + 16} y={HUB.y + 54} fontSize="20" fontWeight="600" fill="#ffffff" fontFamily="var(--font-display)">
-        ShipKardo
+        WinqoHub
       </text>
       <text x={HUB.x + 16} y={HUB.y + 77} fontSize="11" fill="#a8a59e" fontFamily={sans}>
         orders · products · stock
@@ -193,7 +193,7 @@ function MapFlow() {
       <FlowArrow />
       <div className="rounded-xl border border-signal/50 bg-signal/[0.07] p-4">
         <p className="label text-signal-soft">Order hub</p>
-        <p className="mt-2 font-display text-xl font-semibold text-fg">ShipKardo</p>
+        <p className="mt-2 font-display text-xl font-semibold text-fg">WinqoHub</p>
         <p className="mt-1 text-sm text-fg-muted">orders · products · stock</p>
         <p className="mt-4 border-t border-line pt-3 text-sm text-ice">AI layer · NL reporting &amp; agents (OpenAI API)</p>
       </div>
@@ -210,7 +210,7 @@ export function IntegrationMap() {
   return (
     <figure className="surface overflow-hidden p-0">
       <div className="flex items-center justify-between border-b border-line px-5 py-3.5 sm:px-6">
-        <span className="label">ShipKardo · integration map</span>
+        <span className="label">WinqoHub · integration map</span>
         <span className="rounded-full border border-line px-2 py-0.5 font-mono text-[0.62rem] tracking-[0.1em] text-fg-subtle uppercase">
           Illustrative
         </span>
@@ -222,7 +222,7 @@ export function IntegrationMap() {
         <MapFlow />
       </div>
       <figcaption className="border-t border-line px-5 py-3.5 text-xs leading-relaxed text-fg-subtle sm:px-6">
-        Channels, couriers and AI I’ve integrated into ShipKardo. A simplified illustration, not a system diagram.
+        Channels, couriers and AI I’ve integrated into WinqoHub. A simplified illustration, not a system diagram.
       </figcaption>
     </figure>
   )

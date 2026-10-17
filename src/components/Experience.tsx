@@ -1,10 +1,16 @@
-import { ArrowUpRight, Award } from 'lucide-react'
-import { experience } from '../data/profile'
+import { useRef } from 'react'
+import { motion, useScroll, useSpring } from 'motion/react'
+import { ArrowUpRight, Award, GraduationCap } from 'lucide-react'
+import { credentials, education, experience } from '../data/profile'
 import { SectionHeader } from './ui/SectionHeader'
 import { Reveal } from './ui/Reveal'
 import { Tag } from './ui/Tag'
 
 export function Experience() {
+  const listRef = useRef<HTMLOListElement>(null)
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ['start 70%', 'end 60%'] })
+  const line = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 })
+
   return (
     <section id="experience" aria-labelledby="experience-title" className="scroll-mt-20 border-t border-line py-28 md:py-36">
       <div className="container-page">
@@ -19,7 +25,11 @@ export function Experience() {
           }
         />
 
-        <ol className="space-y-20 md:space-y-28">
+        <ol ref={listRef} className="relative space-y-20 md:space-y-28">
+          {/* Timeline that draws itself as you scroll */}
+          <span aria-hidden="true" className="absolute top-2 bottom-0 -left-[var(--gutter)] hidden w-px bg-line md:block xl:-left-10">
+            <motion.span style={{ scaleY: line }} className="absolute inset-0 origin-top bg-gradient-to-b from-signal via-signal-soft to-ice" />
+          </span>
           {experience.map((role) => {
             const [from, to] = role.period.split(' — ')
             return (
@@ -70,6 +80,17 @@ export function Experience() {
                               </li>
                             ))}
                           </ul>
+                        </Reveal>
+                      ))}
+                    </ul>
+                  )}
+
+                  {role.points && (
+                    <ul className="mt-8 space-y-3 border-t border-line pt-6">
+                      {role.points.map((p, i) => (
+                        <Reveal as="li" key={p} delay={i * 50} className="flex gap-3 text-[0.95rem] leading-relaxed text-fg-muted">
+                          <span aria-hidden="true" className="mt-[0.7rem] h-px w-3 shrink-0 bg-signal/70" />
+                          {p}
                         </Reveal>
                       ))}
                     </ul>
@@ -133,6 +154,39 @@ export function Experience() {
             )
           })}
         </ol>
+
+        {/* Education & credentials */}
+        <div className="mt-24 grid gap-6 md:mt-32 md:grid-cols-12 md:gap-8">
+          <Reveal className="md:col-span-4 lg:col-span-3">
+            <p className="label flex items-center gap-2.5">
+              <GraduationCap className="size-4 text-signal-soft" aria-hidden="true" />
+              Education &amp; credentials
+            </p>
+          </Reveal>
+          <div className="grid gap-4 sm:grid-cols-2 md:col-span-8 lg:col-start-5">
+            {education.map((e, i) => (
+              <Reveal key={e.degree} delay={i * 80} className="surface surface-interactive p-6">
+                <p className="label">{e.period}</p>
+                <p className="mt-4 font-display text-xl font-semibold tracking-[-0.02em] text-fg">{e.degree}</p>
+                <p className="mt-1 text-fg-muted">{e.school}</p>
+              </Reveal>
+            ))}
+            {credentials.map((c, i) => (
+              <Reveal key={c.title} delay={160 + i * 80} className="surface surface-interactive flex items-start gap-4 p-6">
+                <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-signal/25 bg-signal/[0.08] text-signal-soft">
+                  <Award className="size-[18px]" aria-hidden="true" />
+                </span>
+                <span>
+                  <span className="block font-display text-lg font-semibold tracking-[-0.015em] text-fg">{c.title}</span>
+                  <span className="mt-1 block text-sm text-fg-muted">
+                    {c.issuer}
+                    {c.year && ` · ${c.year}`}
+                  </span>
+                </span>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

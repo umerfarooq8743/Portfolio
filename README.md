@@ -2,9 +2,9 @@
 
 Personal portfolio of **Umer Farooq**, Full-Stack Software Engineer (MEAN Stack) based in Karachi, Pakistan.
 
-🔗 **Live:** https://your-portfolio-link.vercel.app
+🔗 **Live:** https://umer-farooq-portfolio-ashy.vercel.app
 
-It showcases production work in order management with AI, ERP, event booking, healthcare and desktop messaging. Every project is presented as a case study, with my role kept clearly separate from the product itself.
+It showcases production work in order management with AI, ERP, customs clearing, tailoring POS, event booking, healthcare and desktop messaging. Every project is presented as a case study, with my role kept clearly separate from the product itself.
 
 ![Portfolio preview](public/og-image.png)
 
@@ -14,11 +14,13 @@ It showcases production work in order management with AI, ERP, event booking, he
 
 I'm a software engineer at **i-Splendid** with 3+ years of experience building business software on **Angular, Node.js, Express.js and MongoDB**. I've also shipped work on .NET, SQL Server, MySQL and Electron.
 
-- **ShipKardo**: full-stack order management system with 20+ courier integrations and selling-channel sync (Shopify, WooCommerce, Daraz, Splendid Accounts). It also has AI features: natural-language reporting on the OpenAI API, and AI agents (in progress).
+- **WinqoHub** (formerly ShipKardo): full-stack, AI-powered order management system with 20+ courier integrations, selling-channel sync (Shopify, WooCommerce, Daraz), Splendid Accounts inventory sync, SMTP email and SMS. AI features: natural-language reporting on the OpenAI API, and AI agents.
 - **Splendid Accounts**: Angular frontend of a complete ERP. I built sales and purchase invoices and returns, POS, inventory, CRM, profit & loss reporting, and role-based access control.
 - **Mounties**: event and play-area booking portal for an Australian client (Angular, .NET, SQL Server).
 - **NurseNova**: healthcare platform. I built the admin panel and the REST APIs consumed by the mobile app (Angular, Node.js, MySQL).
 - **WinQo**: Electron desktop app for sending WhatsApp messages, with a local MySQL database.
+- **ClearPort ERP**: multi-tenant customs-clearing and freight-forwarding ERP (React, Node.js, PostgreSQL, Prisma).
+- **RobeApp**: management system for a cloth & tailoring brand (Angular 18, Node.js, MongoDB).
 - 🏆 Employee of the Month at i-Splendid, April 2024.
 
 ---
@@ -26,8 +28,10 @@ I'm a software engineer at **i-Splendid** with 3+ years of experience building b
 ## Features
 
 - Responsive, dark design built from a custom design system (Tailwind CSS v4 tokens)
-- Case-study modals for each project, built on the native `<dialog>` element for accessibility
-- Integration map showing the selling channels, couriers and AI layer in ShipKardo
+- Full-screen case studies that expand out of the clicked card, with animated pipelines, metrics and prev/next navigation; deep-linkable at `#work/<id>`
+- Motion: word-by-word hero reveal, pointer-parallax light, count-up stats, cursor spotlight cards, tech marquee, scroll progress and a self-drawing experience timeline (Motion)
+- Downloadable CV (`public/Umer-Farooq-CV.pdf`)
+- Integration map showing the selling channels, couriers and AI layer in WinqoHub
 - Illustrative UI sketches for proprietary work, so no confidential screenshots are exposed
 - Scroll-reveal animations with full `prefers-reduced-motion` support
 - Keyboard accessible: skip link, visible focus states and a focus-trapped mobile menu
@@ -43,6 +47,7 @@ I'm a software engineer at **i-Splendid** with 3+ years of experience building b
 | Framework | React 19 · TypeScript                      |
 | Build     | Vite                                       |
 | Styling   | Tailwind CSS v4                            |
+| Animation | Motion · CSS                               |
 | Icons     | Lucide                                     |
 | Quality   | ESLint · TypeScript strict mode            |
 | Hosting   | Vercel (any static host works)             |
@@ -83,7 +88,7 @@ src/
 ├── components/ui/       ← reusable pieces (Reveal, Tag, ButtonLink, icons)
 ├── hooks/               ← active-section tracking for the navbar
 └── index.css            ← design tokens and shared styles
-public/                  ← photo, favicon, social preview image
+public/                  ← photo, favicon, social preview image, CV PDF
 ```
 
 ---

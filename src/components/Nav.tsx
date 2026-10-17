@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Menu, X } from 'lucide-react'
+import { ArrowUpRight, Download, Menu, X } from 'lucide-react'
 import { navItems, profile } from '../data/profile'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { GitHubIcon, LinkedInIcon } from './ui/BrandIcons'
@@ -137,8 +137,16 @@ export function Nav() {
             <LinkedInIcon className="size-[17px]" />
           </a>
           <a
+            href={profile.cv}
+            download
+            className="group ml-1 inline-flex h-10 items-center gap-1.5 rounded-full border border-line-strong px-4 text-sm font-medium text-fg transition-colors hover:border-white/25 hover:bg-white/[0.06]"
+          >
+            CV
+            <Download className="size-3.5 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+          </a>
+          <a
             href="#contact"
-            className="group ml-1 inline-flex h-10 items-center gap-1.5 rounded-full bg-signal pr-3.5 pl-4.5 text-sm font-semibold text-signal-ink shadow-signal transition-colors hover:bg-[#ff7d55]"
+            className="shine group inline-flex h-10 items-center gap-1.5 rounded-full bg-signal pr-3.5 pl-4.5 text-sm font-semibold text-signal-ink shadow-signal transition-colors hover:bg-[#ff7d55]"
           >
             Let’s talk
             <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
@@ -180,12 +188,21 @@ export function Nav() {
             ))}
           </ul>
           <div className="flex flex-col gap-3 px-6 pt-8 pb-6">
-            <a
-              href={`mailto:${profile.email}`}
-              className="inline-flex h-12 items-center justify-center rounded-full bg-signal text-[0.95rem] font-semibold text-signal-ink"
-            >
-              Email me
-            </a>
+            <div className="flex gap-3">
+              <a
+                href={`mailto:${profile.email}`}
+                className="inline-flex h-12 flex-1 items-center justify-center rounded-full bg-signal text-[0.95rem] font-semibold text-signal-ink"
+              >
+                Email me
+              </a>
+              <a
+                href={profile.cv}
+                download
+                className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full border border-line-strong text-[0.95rem] font-medium text-fg"
+              >
+                <Download className="size-4" aria-hidden="true" /> Download CV
+              </a>
+            </div>
             <div className="flex gap-3">
               <a
                 href={profile.links.github}

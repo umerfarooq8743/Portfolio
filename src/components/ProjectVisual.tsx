@@ -257,7 +257,62 @@ function DesktopSketch() {
   )
 }
 
+function CustomsSketch() {
+  const stages = ['ETA', 'GD', 'DO', 'Gate', 'Bill']
+  return (
+    <div className="flex h-full flex-col gap-3">
+      <div className={`flex items-center px-3 py-2.5 ${panel}`}>
+        {stages.map((s, i) => (
+          <div key={s} className="flex flex-1 items-center last:flex-none">
+            <span
+              className={`grid size-6 shrink-0 place-items-center rounded-full font-mono text-[0.5rem] ring-1 ring-inset ${
+                i < 3 ? 'bg-ok/[0.14] text-ok ring-ok/30' : i === 3 ? 'bg-signal/20 text-signal-soft ring-signal/40' : 'bg-white/[0.04] text-fg-subtle ring-white/10'
+              }`}
+            >
+              {s}
+            </span>
+            {i < stages.length - 1 && <span className={`mx-1 h-px flex-1 ${i < 3 ? 'bg-ok/40' : 'bg-white/10'}`} />}
+          </div>
+        ))}
+      </div>
+      <div className="grid flex-1 grid-cols-5 gap-3">
+        <div className={`col-span-3 flex flex-col gap-2 p-3 ${panel}`}>
+          <div className="mb-1 flex items-center justify-between">
+            <Bar w="38%" tone="strong" />
+            <Pill label="JOB-0123" tone="neutral" />
+          </div>
+          {[
+            { w: '64%', tag: 'Cleared', tone: 'ok' as const },
+            { w: '50%', tag: 'Assessment', tone: 'ice' as const },
+            { w: '58%', tag: 'Gate pass', tone: 'signal' as const },
+          ].map((r, i) => (
+            <div key={i} className={`flex items-center gap-2.5 px-2.5 py-1.5 ${panel}`}>
+              <span className="size-2.5 shrink-0 rounded-sm bg-white/10" />
+              <div className="flex-1">
+                <Bar w={r.w} />
+              </div>
+              <Pill label={r.tag} tone={r.tone} />
+            </div>
+          ))}
+        </div>
+        <div className="col-span-2 flex flex-col gap-2">
+          <div className={`flex-1 p-3 ${panel}`}>
+            <Bar w="55%" />
+            <span className="mt-2.5 block h-2.5 w-2/3 rounded-full bg-white/20" />
+          </div>
+          <div className={`flex flex-1 items-end gap-1 p-3 ${panel}`}>
+            {[40, 65, 50, 80, 60].map((h, i) => (
+              <span key={i} className={`flex-1 rounded-t-sm ${i === 3 ? 'bg-ice/50' : 'bg-white/[0.1]'}`} style={{ height: `${h}%` }} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const sketches: Record<ProjectVisualKind, () => JSX.Element> = {
+  customs: CustomsSketch,
   oms: OmsSketch,
   accounts: AccountsSketch,
   pos: PosSketch,
@@ -269,7 +324,13 @@ const sketches: Record<ProjectVisualKind, () => JSX.Element> = {
 interface ProjectVisualProps {
   kind: ProjectVisualKind
   label: string
-  size?: 'md' | 'lg'
+  size?: 'md' | 'lg' | 'xl'
+}
+
+const heights = {
+  md: 'h-52 p-4 sm:h-56',
+  lg: 'h-56 p-4 sm:h-72 sm:p-5',
+  xl: 'h-64 p-4 sm:h-[22rem] sm:p-6 lg:h-[26rem]',
 }
 
 export function ProjectVisual({ kind, label, size = 'md' }: ProjectVisualProps) {
@@ -286,7 +347,7 @@ export function ProjectVisual({ kind, label, size = 'md' }: ProjectVisualProps) 
         <span className="size-2 rounded-full bg-white/10" />
         <span className="ml-auto font-mono text-[0.6rem] tracking-[0.12em] text-fg-subtle uppercase">Illustrative</span>
       </div>
-      <div aria-hidden="true" className={size === 'lg' ? 'h-56 p-4 sm:h-72 sm:p-5' : 'h-52 p-4 sm:h-56'}>
+      <div aria-hidden="true" className={heights[size]}>
         <Sketch />
       </div>
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-bg/80 to-transparent" />

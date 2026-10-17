@@ -1,4 +1,4 @@
-import { Award } from 'lucide-react'
+import { Award, Download } from 'lucide-react'
 import { profile } from '../data/profile'
 import { SectionHeader } from './ui/SectionHeader'
 import { Reveal } from './ui/Reveal'
@@ -7,7 +7,8 @@ const facts = [
   { term: 'Role', detail: 'Software Engineer — MEAN Stack' },
   { term: 'Company', detail: 'i-Splendid · since Mar 2023' },
   { term: 'Core', detail: 'Angular · Node.js · Express · MongoDB' },
-  { term: 'Also', detail: '.NET · SQL Server · MySQL · Electron' },
+  { term: 'Also', detail: 'React · PostgreSQL · .NET · Electron' },
+  { term: 'Education', detail: 'BS Computer Science · University of Karachi' },
   { term: 'Based in', detail: `${profile.location} · UTC+5` },
 ]
 
@@ -22,7 +23,7 @@ const principles = [
   },
   {
     title: 'Keep learning',
-    body: 'Angular, .NET, Electron and now AI agents — I pick up what the work needs and go deep on it.',
+    body: 'Angular, React, .NET, Electron and now AI agents — I pick up what the work needs and go deep on it.',
   },
 ]
 
@@ -74,6 +75,16 @@ export function About() {
                   <span className="text-fg">Employee of the Month</span> · i-Splendid, April 2024
                 </p>
               </div>
+              <a
+                href={profile.cv}
+                download
+                className="group flex items-center justify-between gap-3 border-t border-line px-5 py-4 text-sm font-medium text-fg transition-colors hover:bg-white/[0.04]"
+              >
+                Download my CV
+                <span className="grid size-8 place-items-center rounded-full border border-line-strong transition-colors group-hover:border-signal group-hover:bg-signal group-hover:text-signal-ink">
+                  <Download className="size-3.5" aria-hidden="true" />
+                </span>
+              </a>
             </div>
           </Reveal>
 
@@ -81,24 +92,31 @@ export function About() {
           <div className="lg:col-span-7 lg:col-start-6">
             <Reveal>
               <p className="font-display text-[clamp(1.45rem,1.15rem+1.1vw,2.1rem)] leading-[1.3] font-medium tracking-[-0.02em] text-pretty text-fg">
-                I’m a full-stack engineer at i-Splendid, building the software businesses run their day on — a complete
-                ERP, an order management system, and the integrations that hold them together.
+                I’m a full-stack engineer at i-Splendid, building the software businesses run their day on — order
+                management, ERPs, and the integrations that hold them together.
               </p>
             </Reveal>
 
             <Reveal delay={80} className="mt-10 space-y-6 text-[1.0625rem] leading-[1.75] text-pretty text-fg-muted">
               <p>
-                On <span className="text-fg">ShipKardo</span> I work across the stack — Angular in front, Node.js, Express
-                and MongoDB behind it — with 20+ courier integrations and selling channels like Shopify, WooCommerce and
-                Daraz feeding into it. Lately that includes AI: natural-language reporting and agents built on the
-                OpenAI API. On <span className="text-fg">Splendid Accounts</span> I build the Angular frontend of the
-                ERP, from invoices, returns and POS to profit &amp; loss reporting and role-based permissions.
+                On <span className="text-fg">WinqoHub</span> I work across the stack — Angular in front, Node.js, Express
+                and MongoDB behind it — with 20+ courier integrations, selling channels like Shopify, WooCommerce and
+                Daraz, email and SMS feeding into it. Lately that includes AI: natural-language reporting and agents
+                built on the OpenAI API. On <span className="text-fg">Splendid Accounts</span> I built the Angular
+                frontend of the ERP, from invoices, returns and POS to profit &amp; loss reporting and role-based
+                permissions.
               </p>
               <p>
                 Around those products I’ve delivered client work too: the admin panel and mobile APIs for{' '}
                 <span className="text-fg">NurseNova</span>, a booking portal for <span className="text-fg">Mounties</span>{' '}
                 in Australia, and <span className="text-fg">WinQo</span>, an Electron desktop app. Before i-Splendid I
-                built WordPress sites at 3DM Solutions.
+                built websites at 3DM Solutions and started out as an intern at Service4Digital.
+              </p>
+              <p>
+                Outside work I build complete systems end to end: <span className="text-fg">ClearPort ERP</span>, a
+                multi-tenant customs-clearing platform on React, Node.js and PostgreSQL, and{' '}
+                <span className="text-fg">RobeApp</span>, a management system for a cloth &amp; tailoring brand on the
+                MEAN stack.
               </p>
             </Reveal>
 
