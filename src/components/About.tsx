@@ -113,10 +113,12 @@ export function About() {
                 built websites at 3DM Solutions and started out as an intern at Service4Digital.
               </p>
               <p>
-                Outside work I build complete systems end to end: <span className="text-fg">ClearPort ERP</span>, a
-                multi-tenant customs-clearing platform on React, Node.js and PostgreSQL, and{' '}
-                <span className="text-fg">RobeApp</span>, a management system for a cloth &amp; tailoring brand on the
-                MEAN stack.
+                Outside work I build complete systems end to end: <span className="text-fg">Manifest ERP</span> (formerly ClearPort), a
+                multi-tenant customs-clearing platform on React, Node.js and PostgreSQL,{' '}
+                <span className="text-fg">Vantra ERP</span>, a multi-company trading ERP with POS and double-entry
+                accounting on Angular, Node.js and MySQL, and{' '}
+                <span className="text-fg">Atelier One</span> (formerly RobeApp), a multi-company suite for tailoring
+                businesses on the MEAN stack.
               </p>
             </Reveal>
 
