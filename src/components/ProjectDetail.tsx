@@ -258,7 +258,7 @@ function Body({ project, index, onNavigate }: { project: Project; index: number;
             </InView>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {cs.capabilities.map((c, i) => (
-                <InView key={c.title} delay={i * 0.08}>
+                <InView key={c.title} delay={(i % 4) * 0.08}>
                   <div onPointerMove={spotlight} className="surface surface-interactive spotlight h-full overflow-hidden p-6">
                     <span className="font-mono text-xs text-signal-soft">{num(i)}</span>
                     <p className="mt-5 font-display text-xl font-semibold tracking-[-0.02em] text-fg">{c.title}</p>
@@ -274,6 +274,31 @@ function Body({ project, index, onNavigate }: { project: Project; index: number;
                 </InView>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* ---------- Under the hood ---------- */}
+        {cs.architecture && (
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+            <InView className="lg:col-span-4">
+              <SectionLabel>Under the hood</SectionLabel>
+              <p className="font-display text-[clamp(1.75rem,1.3rem+1.6vw,2.75rem)] leading-[1.05] font-semibold tracking-[-0.035em] text-fg">
+                How it’s built, <span className="text-fg-muted">layer by layer.</span>
+              </p>
+            </InView>
+            <dl className="overflow-hidden rounded-[var(--radius-lg)] border border-line lg:col-span-8">
+              {cs.architecture.map((a, i) => (
+                <InView key={a.layer} delay={Math.min(i, 4) * 0.05}>
+                  <div className="group grid gap-2 border-b border-line px-5 py-5 transition-colors last:border-b-0 hover:bg-white/[0.025] sm:grid-cols-[9.5rem_1fr] sm:gap-6 sm:px-6">
+                    <dt className="label pt-1 transition-colors group-hover:text-signal-soft">{a.layer}</dt>
+                    <dd>
+                      <p className="font-medium text-fg">{a.tech}</p>
+                      <p className="mt-1.5 text-[0.92rem] leading-relaxed text-pretty text-fg-muted">{a.detail}</p>
+                    </dd>
+                  </div>
+                </InView>
+              ))}
+            </dl>
           </div>
         )}
 

@@ -296,7 +296,7 @@ export function Projects() {
               Production software, <span className="text-fg-muted">built for real businesses.</span>
             </>
           }
-          intro="Order management with AI, a customs-clearing ERP, an accounting ERP, tailoring POS, booking, healthcare and desktop messaging. Open any project for the full case study — proprietary work is shown with illustrative sketches, never fake screenshots."
+          intro="Order management with AI, a customs-clearing ERP, a trading ERP with POS, an accounting ERP, tailoring POS, booking, healthcare and desktop messaging. Open any project for the full case study — proprietary work is shown with illustrative sketches, never fake screenshots."
         />
 
         <div className="space-y-6 lg:space-y-8">
@@ -308,7 +308,7 @@ export function Projects() {
 
           <div className="grid gap-6 md:grid-cols-2 lg:gap-8 xl:grid-cols-3">
             {features.map((p, i) => (
-              <Reveal key={p.id} delay={i * 100} className={`h-full ${i === 2 ? 'md:max-xl:col-span-2' : ''}`}>
+              <Reveal key={p.id} delay={i * 100} className={`h-full ${features.length % 2 === 1 && i === features.length - 1 ? 'md:max-xl:col-span-2' : ''}`}>
                 <FeatureProject project={p} index={order(p)} onOpen={openFrom(p)} />
               </Reveal>
             ))}
