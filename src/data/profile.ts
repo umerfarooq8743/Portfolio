@@ -38,7 +38,7 @@ export const navItems = [
 /* Projects                                                            */
 /* ------------------------------------------------------------------ */
 
-export type ProjectVisualKind = 'oms' | 'accounts' | 'pos' | 'health' | 'booking' | 'desktop' | 'customs'
+export type ProjectVisualKind = 'oms' | 'accounts' | 'pos' | 'health' | 'booking' | 'desktop' | 'customs' | 'workspace'
 
 export interface Project {
   id: string
@@ -832,6 +832,149 @@ export const projects: Project[] = [
     links: [],
   },
   {
+    id: 'atlas-workspace',
+    tier: 'feature',
+    name: 'Atlas Workspace',
+    kind: 'Local-first Productivity Platform',
+    context: 'Independent build',
+    period: '2026',
+    status: 'Active development',
+    problem:
+      'People bounce between a dozen websites to format JSON, merge a PDF, build a resume or clean a spreadsheet — and upload private files to servers they know nothing about.',
+    summary:
+      'One private workspace with a resume builder, 111 browser-based tools, a Notepad++-style code editor, a banner studio, a spreadsheet with its own formula engine and a smart data-import dashboard. No backend, no account and no uploads — every file is processed and stored in the user’s own browser.',
+    role: 'Full-stack — architecture, product and web app',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind CSS v4',
+      'Radix UI',
+      'IndexedDB',
+      'Zod',
+      'Web Workers',
+      'CodeMirror',
+      'pdf-lib',
+      'pdf.js',
+      'SheetJS',
+      'Vitest',
+      'Playwright',
+    ],
+    highlights: [
+      '111 tools across text, JSON, HTML/CSS, developer, PDF & files, images and everyday calculators',
+      'Resume builder with 43 templates, live pagination and selectable-text PDF export',
+      'Sheets with a hand-written formula engine, and Excel/CSV import with automatic insights',
+    ],
+    visual: 'workspace',
+    metrics: [
+      { value: '111', label: 'Browser-based tools' },
+      { value: '43', label: 'Resume templates' },
+      { value: '400+', label: 'Unit, integration & E2E tests' },
+      { value: '0', label: 'Servers, accounts or uploads' },
+    ],
+    caseStudy: {
+      overview:
+        'Atlas Workspace brings everyday tools into one private, local-first app built with Next.js and exported as a fully static site. The resume builder edits structured sections against a live, paginated preview across 43 original templates and prints to a PDF with selectable text and working links. 111 tools cover text, JSON, HTML and CSS, developer utilities, PDF and document conversion, images and everyday calculators. A Notepad++-style editor handles Markdown notes and code files; Banner Studio turns 29 templates — or your resume — into social banners; Sheets is a spreadsheet with its own formula engine; and Smart Data Import profiles, cleans and charts Excel and CSV files with written findings. Everything is versioned, validated and stored in IndexedDB, with one-file backup and import — and no request ever carries the user’s data.',
+      flow: {
+        title: 'Smart data import',
+        steps: ['Upload', 'Profile', 'Map columns', 'Review & clean', 'Auto insights', 'Import', 'Export'],
+      },
+      capabilities: [
+        {
+          title: 'Resume builder',
+          items: ['43 templates in 15 categories', 'Live paginated preview', 'Selectable-text PDF export', 'Rule-based review & tips'],
+        },
+        {
+          title: 'Developer & JSON',
+          items: ['Formatters & validators', 'JSONPath, diff & schema', 'Regex tester in a worker', 'JWT, hashes, UUIDs, cron'],
+        },
+        {
+          title: 'PDF & documents',
+          items: ['Merge, split, rotate, watermark', 'PDF ↔ Word, Excel ↔ CSV', 'PDF tables to Excel', 'Lossless PDF optimisation'],
+        },
+        {
+          title: 'Sheets',
+          items: ['Hand-written formula engine', 'Virtualised 100k-row grid', 'Sort, filter & charts', 'XLSX / CSV / PDF import & export'],
+        },
+        {
+          title: 'Data insights',
+          items: ['Column profiling & quality score', 'Cleaning without mutation', 'Auto-chosen charts with findings', 'Formula-injection-safe export'],
+        },
+        {
+          title: 'Notes, banners & files',
+          items: ['Markdown & Notepad++-style code', 'Banner Studio with 29 templates', 'Image, favicon & QR tools', 'One-file backup & restore'],
+        },
+      ],
+      architecture: [
+        {
+          layer: 'App',
+          tech: 'Next.js App Router · static export',
+          detail: 'Routes only in the app folder and a fully static build — an architectural guarantee that there are no API routes, server actions or server-side storage.',
+        },
+        {
+          layer: 'UI',
+          tech: 'React · Tailwind CSS v4 · Radix UI',
+          detail: 'A design system on semantic tokens with light and dark themes; heavy libraries load only on the pages that use them.',
+        },
+        {
+          layer: 'Storage',
+          tech: 'IndexedDB · Zod · versioned migrations',
+          detail: 'Repositories behind a storage adapter: every read validated and migrated, unreadable records quarantined instead of deleted, and an in-memory fallback when IndexedDB is unavailable.',
+        },
+        {
+          layer: 'Formula engine',
+          tech: 'Lexer · parser · interpreter',
+          detail: 'Spreadsheet formulas parsed by an explicit grammar and evaluated without eval — with references, ranges, cross-sheet links, 50+ functions and cycle detection.',
+        },
+        {
+          layer: 'Documents',
+          tech: 'pdf-lib · pdf.js · mammoth · docx · SheetJS',
+          detail: 'Ten converters with typed, React-free services; file types detected from bytes, and archives inflated under limits so ZIP bombs never reach a parser.',
+        },
+        {
+          layer: 'Security',
+          tech: 'Sandboxed iframes · DOMPurify · Web Workers',
+          detail: 'User HTML renders only in script-free sandboxes, Markdown is sanitised, JSONPath is parsed not evaluated and regexes run in a terminable worker.',
+        },
+        {
+          layer: 'Quality',
+          tech: 'Vitest · Testing Library · Playwright',
+          detail: '361 unit and integration tests and 40 end-to-end journeys that generate real PDFs and check page counts, fonts, links and phone-width layouts.',
+        },
+      ],
+      contribution: [
+        'Designed and built the whole product: architecture, design system, storage layer and every module.',
+        'Built a resume builder whose preview and PDF share one paginator, with 43 templates driven by a single renderer.',
+        'Built 111 tools from a single registry, with simple transforms as pure functions and richer tools lazy-loaded.',
+        'Wrote a spreadsheet formula engine — lexer, parser and interpreter — with dependency tracking, error propagation and a virtualised grid.',
+        'Built Smart Data Import: byte-level file detection, column profiling, non-destructive cleaning and an insights dashboard that picks honest charts and writes findings.',
+        'Built ten in-browser document converters with ZIP-bomb limits, macro detection and formula-injection-safe exports.',
+        'Made storage resilient: schema validation and migrations on every read, quarantine for damaged records, backups and cross-tab sync.',
+        'Covered it with 361 unit and integration tests, 40 Playwright journeys and mutation testing.',
+      ],
+      involves: [
+        {
+          title: 'Private by architecture',
+          body: 'Promising not to upload files is easy; making it impossible is better. A static export has no server to send data to, and every file is parsed in the browser.',
+        },
+        {
+          title: 'Never trust a file',
+          body: 'A renamed PDF, a ZIP bomb, a macro or a cell that starts with “=” are all real inputs. Detecting formats from bytes and inflating under limits keeps the parsers safe.',
+        },
+        {
+          title: 'Data people can’t lose',
+          body: 'Browser storage can be cleared or corrupted. Validating every read, quarantining bad records and offering one-file backups means a broken record never takes the rest with it.',
+        },
+        {
+          title: 'Honest output',
+          body: 'A PDF that looks right but has broken text, or a chart that misleads, is worse than none. The tests check real PDFs, and the insights only offer charts that fit the data.',
+        },
+      ],
+      note: 'Atlas Workspace is live and in active development. It runs entirely in the browser — nothing is uploaded or tracked.',
+    },
+    links: [{ label: 'Open live app', href: 'https://atlas-workspace-ai.vercel.app/' }],
+  },
+  {
     id: 'mounties',
     tier: 'feature',
     name: 'Mounties',
@@ -995,7 +1138,7 @@ export const projects: Project[] = [
   },
   {
     id: 'nursenova',
-    tier: 'feature',
+    tier: 'index',
     name: 'NurseNova',
     kind: 'Family Health App — Admin Panel & REST APIs',
     context: 'Professional · i-Splendid',
@@ -1510,6 +1653,6 @@ export const repos: { name: string; title: string; description: string; tags: st
 export const stats: { value: string; label: string }[] = [
   { value: '3+', label: 'Years of production experience' },
   { value: '20+', label: 'Courier integrations shipped' },
-  { value: '8', label: 'Products & platforms built' },
+  { value: '9', label: 'Products & platforms built' },
   { value: 'Apr ’24', label: 'Employee of the Month' },
 ]

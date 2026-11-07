@@ -311,6 +311,48 @@ function CustomsSketch() {
   )
 }
 
+function WorkspaceSketch() {
+  const tools = ['signal', 'base', 'base', 'ice', 'base', 'base', 'base', 'base', 'ice'] as const
+  return (
+    <div className="flex h-full gap-3">
+      <div className="hidden w-[20%] flex-col gap-2.5 border-r border-white/[0.06] pr-3 sm:flex">
+        <Bar w="70%" tone="strong" />
+        <div className="mt-2 space-y-2.5">
+          {['78%', '62%', '70%', '55%', '66%', '58%', '72%'].map((w, i) => (
+            <Bar key={i} w={w} tone={i === 1 ? 'signal' : 'base'} />
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col gap-2.5">
+        <div className="flex items-center gap-2">
+          <span className="h-5 flex-1 rounded-md border border-white/[0.08] bg-white/[0.03]" />
+          <Pill label="111 tools" tone="signal" />
+        </div>
+        <div className="grid flex-1 grid-cols-3 gap-2">
+          {tools.map((t, i) => (
+            <div key={i} className={`flex flex-col justify-between p-2 ${panel}`}>
+              <span className={`size-3 rounded-sm ${t === 'signal' ? 'bg-signal/60' : t === 'ice' ? 'bg-ice/45' : 'bg-white/[0.12]'}`} />
+              <Bar w={['70%', '58%', '64%'][i % 3]} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className={`hidden w-[26%] flex-col gap-2 p-2.5 md:flex ${panel}`}>
+        <span className="h-2 w-2/3 rounded-full bg-white/25" />
+        <Bar w="45%" tone="signal" />
+        <div className="mt-1.5 space-y-1.5">
+          {['90%', '76%', '84%', '60%', '88%', '70%', '80%'].map((w, i) => (
+            <Bar key={i} w={w} />
+          ))}
+        </div>
+        <span className="mt-1 self-start">
+          <Pill label="PDF" tone="ok" />
+        </span>
+      </div>
+    </div>
+  )
+}
+
 const sketches: Record<ProjectVisualKind, () => JSX.Element> = {
   customs: CustomsSketch,
   oms: OmsSketch,
@@ -319,6 +361,7 @@ const sketches: Record<ProjectVisualKind, () => JSX.Element> = {
   health: HealthSketch,
   booking: BookingSketch,
   desktop: DesktopSketch,
+  workspace: WorkspaceSketch,
 }
 
 interface ProjectVisualProps {
