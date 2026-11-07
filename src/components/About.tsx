@@ -116,9 +116,10 @@ export function About() {
                 Outside work I build complete systems end to end: <span className="text-fg">Manifest ERP</span> (formerly ClearPort), a
                 multi-tenant customs-clearing platform on React, Node.js and PostgreSQL,{' '}
                 <span className="text-fg">Vantra ERP</span>, a multi-company trading ERP with POS and double-entry
-                accounting on Angular, Node.js and MySQL, and{' '}
+                accounting on Angular, Node.js and MySQL,{' '}
                 <span className="text-fg">Atelier One</span> (formerly RobeApp), a multi-company suite for tailoring
-                businesses on the MEAN stack.
+                businesses on the MEAN stack, and <span className="text-fg">Atlas Workspace</span>, a local-first
+                productivity platform on Next.js with 111 tools, a resume builder and a spreadsheet engine.
               </p>
             </Reveal>
 

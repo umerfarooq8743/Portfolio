@@ -21,6 +21,7 @@ I'm a software engineer at **i-Splendid** with 3+ years of experience building b
 - **WinQo**: Electron desktop app that turns WhatsApp numbers into an automated messaging gateway, pulling tasks from Splendid Accounts, WinqoHub or any custom API (whatsapp-web.js, SQLite).
 - **Manifest ERP** (formerly ClearPort ERP): multi-tenant customs-clearing and freight-forwarding ERP — 17-step workflow, 14 customs stages, billing, banks and 15 verified reports (React, Node.js, PostgreSQL, Prisma).
 - **Vantra ERP** (formerly Cuba POS): multi-company trading ERP — sales, purchases, moving-average inventory, POS, automatic double-entry accounting and 20 reports (Angular 17, Node.js, MySQL).
+- **Atlas Workspace**: local-first productivity platform — resume builder, 111 browser tools, code editor, banner studio, spreadsheet with a formula engine and data insights (Next.js, React, TypeScript, IndexedDB).
 - **Atelier One** (formerly RobeApp): multi-company tailoring business suite — measurements, workshop orders, meter-based stock, payments, wages and 13 reports (Angular 18, Node.js, MongoDB).
 - 🏆 Employee of the Month at i-Splendid, April 2024.
 
