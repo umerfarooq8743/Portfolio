@@ -353,7 +353,60 @@ function WorkspaceSketch() {
   )
 }
 
+function CateringSketch() {
+  const inquiries = [
+    { w: '62%', tag: 'New', tone: 'ice' as const },
+    { w: '48%', tag: 'Quote sent', tone: 'signal' as const },
+    { w: '56%', tag: 'Confirmed', tone: 'ok' as const },
+  ]
+  return (
+    <div className="flex h-full gap-3">
+      {/* Public website: hero + menu cards */}
+      <div className="flex flex-1 flex-col gap-2.5">
+        <div
+          className={`flex h-[44%] flex-col justify-end gap-1.5 p-3 ${panel} bg-[linear-gradient(135deg,rgba(255,107,61,0.18),rgba(245,197,107,0.06)_45%,transparent_75%)]`}
+        >
+          <span className="h-2.5 w-1/2 rounded-full bg-white/25" />
+          <Bar w="36%" />
+          <span className="mt-1 self-start">
+            <Pill label="Request a quote" tone="signal" />
+          </span>
+        </div>
+        <div className="grid flex-1 grid-cols-3 gap-2">
+          {['bg-signal/20', 'bg-warn/15', 'bg-white/[0.07]'].map((tone, i) => (
+            <div key={tone} className={`flex flex-col gap-1.5 p-1.5 ${panel}`}>
+              <span className={`flex-1 rounded-md ${tone}`} />
+              <Bar w={['70%', '56%', '64%'][i]} />
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Admin: inquiry pipeline + chat */}
+      <div className={`hidden w-[40%] flex-col gap-2 p-2.5 sm:flex ${panel}`}>
+        <div className="mb-0.5 flex items-center justify-between gap-2">
+          <Bar w="40%" tone="strong" />
+          <Pill label="Inquiries" tone="neutral" />
+        </div>
+        {inquiries.map((r) => (
+          <div key={r.tag} className="flex items-center gap-2 rounded-md border border-white/[0.05] px-2 py-1.5">
+            <span className="size-2 shrink-0 rounded-full bg-white/15" />
+            <div className="flex-1">
+              <Bar w={r.w} />
+            </div>
+            <Pill label={r.tag} tone={r.tone} />
+          </div>
+        ))}
+        <div className="mt-auto flex items-end gap-1.5">
+          <span className="block h-5 flex-1 rounded-lg rounded-bl-sm bg-white/[0.06]" />
+          <span className="size-5 shrink-0 rounded-full bg-signal/50" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const sketches: Record<ProjectVisualKind, () => JSX.Element> = {
+  catering: CateringSketch,
   customs: CustomsSketch,
   oms: OmsSketch,
   accounts: AccountsSketch,

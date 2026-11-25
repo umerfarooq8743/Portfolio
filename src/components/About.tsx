@@ -118,8 +118,10 @@ export function About() {
                 <span className="text-fg">Vantra ERP</span>, a multi-company trading ERP with POS and double-entry
                 accounting on Angular, Node.js and MySQL,{' '}
                 <span className="text-fg">Atelier One</span> (formerly RobeApp), a multi-company suite for tailoring
-                businesses on the MEAN stack, and <span className="text-fg">Atlas Workspace</span>, a local-first
-                productivity platform on Next.js with 111 tools, a resume builder and a spreadsheet engine.
+                businesses on the MEAN stack, <span className="text-fg">Toolnest</span> (formerly Atlas Workspace), a local-first
+                productivity and design platform on Next.js with 113 tools and 615 templates, and{' '}
+                <span className="text-fg">Alam Pakwan House</span>, a live catering website with an admin CMS, quotations
+                and live chat on React, Node.js and MongoDB.
               </p>
             </Reveal>
 

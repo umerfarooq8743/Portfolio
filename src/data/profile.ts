@@ -14,7 +14,7 @@ export const profile = {
   specialty: 'Full-Stack MEAN Stack Developer',
   location: 'Karachi, Pakistan',
   timezone: 'PKT · UTC+5',
-  experience: '3+ years',
+  experience: '4+ years',
   currentRole: 'Software Engineer at i-Splendid',
   email: 's.m.umerfarooq8743@gmail.com',
   photo: '/umer-farooq.jpg',
@@ -38,7 +38,16 @@ export const navItems = [
 /* Projects                                                            */
 /* ------------------------------------------------------------------ */
 
-export type ProjectVisualKind = 'oms' | 'accounts' | 'pos' | 'health' | 'booking' | 'desktop' | 'customs' | 'workspace'
+export type ProjectVisualKind =
+  | 'oms'
+  | 'accounts'
+  | 'pos'
+  | 'health'
+  | 'booking'
+  | 'desktop'
+  | 'customs'
+  | 'workspace'
+  | 'catering'
 
 export interface Project {
   id: string
@@ -260,7 +269,7 @@ export const projects: Project[] = [
     kind: 'Multi-tenant Customs Clearing & Freight Forwarding ERP',
     context: 'Independent build',
     period: '2026',
-    status: 'Active development',
+    status: 'Live · active development',
     problem:
       'Every import shipment means documents, a goods declaration, duty, delivery orders, transport, empty returns, expenses and a bill — usually tracked across paper files and spreadsheets.',
     summary:
@@ -283,23 +292,24 @@ export const projects: Project[] = [
       'Puppeteer',
       'ExcelJS',
       'Docker',
+      'GitHub Actions',
       'Vitest',
     ],
     highlights: [
       'The full 17-step clearing workflow, with 14 customs stages and a dated log of who did what',
       'Self sign-up, company setup and team invitations — one person can work in several companies',
-      '15 reports with Excel and PDF export, verified against the app’s own ledgers by 114 automated checks',
+      '18 reports with Excel and PDF export, tied back to the SOA and bank ledger — 112 tests run in CI on every push',
     ],
     visual: 'customs',
     metrics: [
       { value: '17', label: 'Workflow steps' },
       { value: '14', label: 'Customs stages' },
       { value: '66', label: 'Permissions across 5 roles' },
-      { value: '15', label: 'Verified reports' },
+      { value: '18', label: 'Reports with Excel & PDF' },
     ],
     caseStudy: {
       overview:
-        'Manifest ERP (formerly ClearPort ERP) runs a clearing and forwarding house from one place. Anyone can sign up, create their company and invite their team; every company gets its own isolated workspace with five ready-made roles, default masters and its own numbering. Before a vessel lands, the ETA sheet tracks arrivals and the documents checklist, and warns about duplicate bills of lading. Once the papers are in, the entry becomes a job file — and from there the shipment moves through 14 customs stages, pay orders and deposits, gate passes, full or partial deliveries and empty-container returns, while staff record expense vouchers against it. Billing turns billable vouchers and agency charges into sales-tax invoices, payments, advances and credit or debit notes, feeding a statement of account and the bank ledger. A close-file checklist makes sure nothing is left open, and a “Next step” card on every job file tells the user what to do now. I designed and built it end to end: the PostgreSQL schema, the Express API, the React web app and the shared validation and permission package between them.',
+        'Manifest ERP (formerly ClearPort ERP) runs a clearing and forwarding house from one place. Anyone can sign up, create their company and invite their team; every company gets its own isolated workspace with five ready-made roles, default masters and its own numbering. Before a vessel lands, the ETA sheet tracks arrivals and the documents checklist, and warns about duplicate bills of lading. Once the papers are in, the entry becomes a job file — and from there the shipment moves through 14 customs stages, pay orders and deposits, gate passes, full or partial deliveries and empty-container returns, while staff record expense vouchers against it. Billing turns billable vouchers and agency charges into sales-tax invoices, payments, advances and credit or debit notes, feeding a statement of account and the bank ledger. Tax codes, withholding tax and client advances flow through to 18 reports; closed accounting periods lock old money records, and uploaded files are served only through signed links that expire. A close-file checklist makes sure nothing is left open, and a “Next step” card on every job file tells the user what to do now. I designed and built it end to end: the PostgreSQL schema, the Express API, the React web app and the shared validation and permission package between them.',
       flow: {
         title: 'Clearing workflow',
         steps: [
@@ -336,15 +346,15 @@ export const projects: Project[] = [
         },
         {
           title: 'Money',
-          items: ['Expense vouchers & approvals', 'Pay orders & deposits', 'Sales-tax invoices', 'Payments, advances & SOA'],
+          items: ['Vouchers: approve, adjust or reject', 'Pay orders & deposits', 'Sales-tax invoices with tax codes', 'Advances, credit notes & SOA'],
         },
         {
           title: 'Banks',
-          items: ['Bank accounts', 'Live balances', 'Bank ledger', 'Deposit refunds'],
+          items: ['Bank, cash & wallet accounts', 'Live balances', 'Ledger with Excel export', 'Deposit refunds'],
         },
         {
           title: 'Reports',
-          items: ['Receivables aging', 'Job file profitability', 'Files pending by stage', 'Staff performance'],
+          items: ['Receivables aging & advances', 'Tax summary', 'Job file profitability', 'Files pending by stage'],
         },
         {
           title: 'Team & companies',
@@ -388,9 +398,14 @@ export const projects: Project[] = [
           detail: 'Branded invoices, statements, job files and customs forms as PDFs, and report workbooks with a header, totals and a summary sheet.',
         },
         {
+          layer: 'Integrity',
+          tech: 'Row locks · period lock · signed file links',
+          detail: 'Row locks stop overpayment, double billing and over-delivery; closed accounting periods can’t be changed; every file link is HMAC-signed for one file and expires.',
+        },
+        {
           layer: 'Operations',
-          tech: 'Pino · helmet · Docker Compose',
-          detail: 'Request IDs in every log line and error, rate limiting and security headers, a full audit trail and one-command local stack.',
+          tech: 'Pino · helmet · GitHub Actions · Docker Compose',
+          detail: 'Request IDs in every log line, rate limiting and login lockout, a full audit trail, CI on every push and a one-command local stack.',
         },
       ],
       contribution: [
@@ -399,9 +414,10 @@ export const projects: Project[] = [
         'Built multi-tenancy with self sign-up, company setup, invitations, owner protections and users who belong to several companies with a different role in each.',
         'Implemented 66 permissions in 16 groups across five roles, enforced on the server for the current company and mirrored in the UI.',
         'Built billing — sales-tax invoices from billable vouchers and agency charges, payments, advances, credit and debit notes and statements of account — plus a bank ledger.',
-        'Built 15 reports with Excel and PDF export and a verification suite of 114 checks that ties each report back to the ledgers.',
+        'Built 18 reports with Excel and PDF export — including a tax summary and receivables & advances — with tests that tie aging to the SOA and bank position to the ledger.',
+        'Hardened money and files: row locks against overpayment and double billing, period locking, login lockout and HMAC-signed, expiring file links.',
         'Implemented secure authentication with rotating refresh tokens and TOTP 2FA, real-time notifications, background jobs and branded PDF documents.',
-        'Set up structured logging with request IDs, an audit trail, Docker Compose and end-to-end tests that drive every page and role in a real browser.',
+        'Set up structured logging with request IDs, an audit trail, Docker Compose and a GitHub Actions pipeline that runs migrations, typecheck, 112 tests and the production build.',
       ],
       involves: [
         {
@@ -421,9 +437,9 @@ export const projects: Project[] = [
           body: 'Clearing has many steps and many people. A next-step card, expiry alerts and a close-file checklist keep each file moving and stop anything from being forgotten.',
         },
       ],
-      note: 'Manifest ERP is in active development. Company names in the demo data are fictional.',
+      note: 'Manifest ERP is live and in active development — sign up to create a company and explore it. Company names in the demo data are fictional.',
     },
-    links: [],
+    links: [{ label: 'Open live app', href: 'https://app-manifest-erp.vercel.app/' }],
   },
   {
     id: 'vantra-erp',
@@ -433,14 +449,14 @@ export const projects: Project[] = [
     kind: 'Multi-company Trading ERP with POS & Accounting',
     context: 'Independent build',
     period: '2026',
-    status: 'v2.0',
+    status: 'Live · v2.0',
     problem:
       'Small trading businesses run sales, purchases, stock and their books in separate tools — so stock counts drift, double entries are typed by hand and nobody knows the real profit until month end.',
     summary:
       'A multi-company ERP for retail, wholesale and distribution businesses: sales, purchases, inventory, a point-of-sale counter and full double-entry accounting in one system. Every posted document moves stock at average cost and writes its own balanced journal — no double entry is ever typed by hand.',
     role: 'Full-stack — architecture, API and web app',
     stack: [
-      'Angular 17',
+      'Angular 21',
       'TypeScript',
       'Signals',
       'RxJS',
@@ -450,9 +466,10 @@ export const projects: Project[] = [
       'MySQL 8',
       'Sequelize',
       'class-validator',
-      'JWT',
+      'HttpOnly sessions',
       'bcrypt',
       'Nodemailer',
+      'Playwright',
     ],
     highlights: [
       'One document engine for 8 document types, with posting rules that keep the books balanced automatically',
@@ -464,11 +481,11 @@ export const projects: Project[] = [
       { value: '8', label: 'Document types, one engine' },
       { value: '20', label: 'Reports' },
       { value: '5', label: 'Built-in roles + custom' },
-      { value: '100+', label: 'Automated checks passing' },
+      { value: '108', label: 'API & browser tests passing' },
     ],
     caseStudy: {
       overview:
-        'Vantra ERP (formerly Cuba POS) runs a trading business end to end. One sign-in can run several companies, each with its own team, data, books and settings. Creating a company sets up a chart of accounts, a main warehouse, a walk-in customer and five roles. Purchases flow from order to invoice to return and vendor payment; sales from order to invoice to return and customer receipt; and a POS counter turns a cart into a posted invoice and receipt in one step with a thermal receipt. Posting any document moves stock at moving-average cost and creates a balanced double-entry journal from a single table of posting rules, so ledgers, the trial balance, profit & loss and the balance sheet are always up to date. I rebuilt the original single-module POS into this system: the Express API, the MySQL schema and the Angular 17 app with its own UI kit.',
+        'Vantra ERP (formerly Cuba POS) runs a trading business end to end. One sign-in can run several companies, each with its own team, data, books and settings. Creating a company sets up a chart of accounts, a main warehouse, a walk-in customer and five roles. Purchases flow from order to invoice to return and vendor payment; sales from order to invoice to return and customer receipt; and a POS counter turns a cart into a posted invoice and receipt in one step with a thermal receipt. Posting any document moves stock at moving-average cost and creates a balanced double-entry journal from a single table of posting rules, so ledgers, the trial balance, profit & loss and the balance sheet are always up to date. I rebuilt the original single-module POS into this system: the Express API, the MySQL schema and the Angular app with its own UI kit — since upgraded to Angular 21 LTS, with cookie-based sessions and API and browser test suites.',
       flow: {
         title: 'Sales cycle',
         steps: ['Sale order', 'Sale invoice', 'Post', 'Stock issued at average cost', 'Journal & COGS', 'Customer receipt', 'Ledgers & reports'],
@@ -510,7 +527,7 @@ export const projects: Project[] = [
       architecture: [
         {
           layer: 'Frontend',
-          tech: 'Angular 17 · signals · standalone components',
+          tech: 'Angular 21 LTS · signals · standalone components',
           detail: 'OnPush components with the new control flow; routes, menus and pages generated from registries, so a new document type or master list needs almost no new UI code.',
         },
         {
@@ -540,17 +557,22 @@ export const projects: Project[] = [
         },
         {
           layer: 'Access',
-          tech: 'JWT · company context · RBAC',
-          detail: 'Every request resolves the member’s company, role and permissions on the server; the UI mirrors the same rules with guards and a *can directive.',
+          tech: 'HttpOnly cookie sessions · company context · RBAC',
+          detail: 'Sessions live in an HttpOnly cookie with sliding renewal; every request resolves the member’s company, role and permissions on the server, and the UI mirrors the same rules with guards and a *can directive.',
         },
         {
           layer: 'Security & email',
           tech: 'bcrypt · rate limits · Nodemailer',
           detail: 'Hashed, single-use reset and invitation tokens, sessions invalidated on password change, rate-limited sign-in and branded HTML email.',
         },
+        {
+          layer: 'Quality',
+          tech: 'Node test runner · Playwright',
+          detail: '95 API tests on an isolated test database — tenant isolation, posting, average cost, oversell, returns, voids and concurrency — plus 13 Playwright browser journeys including the phone layout.',
+        },
       ],
       contribution: [
-        'Rebuilt the original invoice-only POS into a full multi-company ERP — API, database and Angular 17 front end.',
+        'Rebuilt the original invoice-only POS into a full multi-company ERP — API, database and Angular front end — and later upgraded it to Angular 21 LTS with zero client advisories.',
         'Designed a single document engine for eight document types, driven by a registry, with conversions between orders, invoices and returns.',
         'Built the accounting engine: posting rules for every document, automatic COGS, manual journals, party ledgers, trial balance and financial statements.',
         'Built the inventory engine with an immutable stock ledger, moving-average costing per warehouse, transfers, adjustments and negative-stock protection.',
@@ -558,6 +580,7 @@ export const projects: Project[] = [
         'Built 20 reports on one report engine with filters, totals, charts, CSV export and printing with the company letterhead.',
         'Implemented multi-company access with invitations, five built-in roles, custom roles with a permission matrix and a field-level activity log.',
         'Created an in-house Angular UI kit on design tokens, global search, keyboard shortcuts and a demo company generator with 60 days of trading.',
+        'Covered the API with 95 tests — tenant isolation, finance, auth and every module wired with the web app’s own payloads — and added 13 Playwright browser journeys.',
       ],
       involves: [
         {
@@ -577,115 +600,9 @@ export const projects: Project[] = [
           body: 'A cashier, a storekeeper and an accountant see different menus, but the real check happens on the API for every request, for the company in that request.',
         },
       ],
-      note: 'Vantra ERP is in a private repository. Company names in the demo data are fictional.',
+      note: 'Vantra ERP is live — explore it in the browser. Company names in the demo data are fictional.',
     },
-    links: [],
-  },
-  {
-    id: 'splendid-accounts',
-    tier: 'feature',
-    name: 'Splendid Accounts',
-    kind: 'Multi-tenant Cloud ERP & Accounting Platform',
-    context: 'Professional · i-Splendid',
-    period: 'Mar 2023 — Jun 2023',
-    problem:
-      'Small and medium-sized businesses run sales, purchasing, stock, payroll and tax filing in separate tools and spreadsheets — so the books never quite match what actually happened at the counter or in the warehouse.',
-    summary:
-      'A multi-tenant, multi-branch cloud ERP for small and medium-sized businesses in Pakistan, Saudi Arabia and Malaysia — sales, purchase, inventory, double-entry accounting, POS, payroll, CRM and tax-authority e-invoicing in one system. I worked on its Angular frontend: sales, purchase, POS, inventory and reporting screens, and the role and permission system.',
-    role: 'Frontend — Angular',
-    stack: ['Angular', 'TypeScript', 'RxJS', 'Nebular', 'Syncfusion EJ2', 'ECharts', 'SCSS', 'Bootstrap', 'REST APIs'],
-    highlights: [
-      'Sales & purchase invoices and returns, plus point of sale (POS)',
-      'Inventory, CRM and financial reports such as profit & loss',
-      'Role-based access control — granular permissions and rights across modules',
-    ],
-    visual: 'accounts',
-    metrics: [
-      { value: '3', label: 'Countries — PK, KSA, MY' },
-      { value: '140+', label: 'Database entities' },
-      { value: '180+', label: 'API controllers' },
-      { value: '21', label: 'Built-in roles' },
-    ],
-    caseStudy: {
-      overview:
-        'Splendid Accounts is i-Splendid’s cloud ERP and accounting platform. Every company is an isolated tenant with its own branches, currencies, roles and settings, and every screen works inside a company-and-branch context. Sales move from quotation to order, delivery and invoice; purchases from order to receipt and invoice; and every approved document posts a balanced double-entry transaction, moves stock in the right warehouse and updates customer or vendor balances. On top sit POS, payroll, CRM, dashboards and e-invoicing with the tax authorities of Pakistan (FBR), Saudi Arabia (ZATCA) and Malaysia (MyInvois). My role was on the Angular frontend that accountants, cashiers and managers use every day.',
-      flow: {
-        title: 'Sales cycle',
-        steps: ['Quotation', 'Sale order', 'Delivery', 'Invoice', 'Approval', 'Ledger & stock posting', 'Payment & settlement'],
-      },
-      capabilities: [
-        { title: 'Sales', items: ['Quotations, orders & deliveries', 'Sale invoices & returns', 'Credit notes & payments', 'Customer portal'] },
-        { title: 'Purchase', items: ['Purchase orders & receipts', 'Purchase invoices & returns', 'Vendor payments & refunds', 'Vendor settlements'] },
-        { title: 'Inventory', items: ['Multi-warehouse stock', 'Batches & adjustments', 'Composite products', 'Inventory valuation'] },
-        { title: 'Accounting', items: ['Chart of accounts', 'Journal entries', 'Bank deposits & fund transfers', 'Multi-currency'] },
-        { title: 'Point of sale', items: ['POS invoices', 'Cash registers & sessions', 'Delivery counter', 'POS summaries'] },
-        { title: 'People & CRM', items: ['Employees & attendance', 'Payroll periods & leave', 'Leads & events', 'Sales geography'] },
-        { title: 'Compliance', items: ['FBR e-invoicing (Pakistan)', 'ZATCA (Saudi Arabia)', 'MyInvois (Malaysia)', 'Audit trail'] },
-        { title: 'Insight & access', items: ['KPI dashboards & aging', 'P&L, trial balance, balance sheet', 'PDF & Excel exports', 'Roles & per-endpoint rights'] },
-      ],
-      architecture: [
-        {
-          layer: 'Frontend',
-          tech: 'Angular · Nebular · Syncfusion EJ2',
-          detail: 'Feature modules per business area, a shared API service layer, route guards and HTTP interceptors, server-paged data grids and ECharts dashboards across four themes.',
-        },
-        {
-          layer: 'Backend',
-          tech: 'ASP.NET Core · Entity Framework Core',
-          detail: 'A layered API — controllers, services, repositories and a unit of work — with transaction builders that turn each approved document into balanced ledger entries.',
-        },
-        {
-          layer: 'Data',
-          tech: 'SQL Server',
-          detail: 'Every record is keyed by company and branch, so tenants are isolated at the database level, with row versions for optimistic concurrency.',
-        },
-        {
-          layer: 'Access control',
-          tech: 'JWT · API keys · RBAC',
-          detail: 'Roles map to page actions and page actions to API endpoints; the frontend mirrors the same rights to show only the menus, screens and buttons a user may use.',
-        },
-        {
-          layer: 'Background & real time',
-          tech: 'Hangfire · SignalR',
-          detail: 'Recurring invoices, reminders, inventory valuation and tax-authority posting run as background jobs, with live notifications pushed to the browser.',
-        },
-        {
-          layer: 'Integrations',
-          tech: 'Tax authorities · payments · messaging',
-          detail: 'FBR, ZATCA and MyInvois e-invoicing, local payment gateways, email, SMS and WhatsApp, push notifications and a shipping link to WinqoHub.',
-        },
-      ],
-      contribution: [
-        'Sales modules: sale invoices and sale returns, including draft, approve and void flows.',
-        'Purchase modules: purchase invoices and purchase returns.',
-        'Point of sale (POS) screens for fast, counter-side selling.',
-        'Inventory modules for tracking stock across warehouses.',
-        'Financial reports, including profit & loss (income statement).',
-        'CRM screens for managing customers.',
-        'Roles and permissions: role-based access control with granular rights, so each user only sees and does what their role allows.',
-        'Maintaining and improving production features, debugging issues and collaborating with backend and product teammates.',
-      ],
-      involves: [
-        {
-          title: 'Numbers that must add up',
-          body: 'Approving one invoice posts receivables, revenue, cost of sales, tax and stock at once. A frontend for accounting has to make correct data entry the easy path, because a mistake shows up in someone’s profit & loss.',
-        },
-        {
-          title: 'Permissions everywhere',
-          body: 'Twenty-one roles cut across every module — menus, screens, buttons and actions. Getting access control right is what lets a business safely hand the system to cashiers, accountants and managers alike.',
-        },
-        {
-          title: 'Documents with a lifecycle',
-          body: 'Drafts, approvals, voids and revisions all behave differently, and a revised invoice must keep its number and its audit trail. The UI has to make each state and its allowed actions obvious.',
-        },
-        {
-          title: 'Speed at the counter',
-          body: 'POS is used under pressure, with customers waiting. Its screens need to be fast and forgiving in a way back-office forms don’t.',
-        },
-      ],
-      note: 'Splendid Accounts is a proprietary product. Platform architecture is described at a high level; my own work was on the Angular frontend. Source code, configuration and customer data are not shared.',
-    },
-    links: [{ label: 'Product website', href: 'https://splendidaccounts.com/' }],
+    links: [{ label: 'Open live app', href: 'https://app-vantra-erp.vercel.app/' }],
   },
   {
     id: 'atelier-one',
@@ -694,11 +611,12 @@ export const projects: Project[] = [
     formerly: 'RobeApp',
     kind: 'Multi-company Tailoring Business Suite',
     context: 'Independent build · first customer: ROBE Cloth & Tailoring',
-    status: 'Active development',
+    period: '2026',
+    status: 'Live · active development',
     problem:
       'A tailoring shop tracks measurements, fabric sold by the meter, orders moving through the workshop, staff wages and money owed — in registers that never add up.',
     summary:
-      'Multi-company management software for tailoring and fabric businesses: customers with garment measurements, meter-based stock, orders tracked through the workshop, payments, purchases, staff wages and loans, expenses and 13 reports. Anyone can sign up, get a private workspace on a 14-day trial and add their team.',
+      'Multi-company management software for tailoring and fabric businesses: customers with measurements for seven garment types, meter-based stock that can never be oversold, orders tracked through the workshop, payments, purchases, staff wages and loans, expenses and 13 reports. Anyone can sign up, get a private workspace on a 14-day trial and invite their team by email.',
     role: 'Full-stack — architecture, API and web app',
     stack: [
       'Angular 18',
@@ -712,24 +630,26 @@ export const projects: Project[] = [
       'Mongoose',
       'JWT',
       'bcrypt',
+      'Nodemailer',
       'PDFKit',
       'Jest',
+      'Jasmine & Karma',
     ],
     highlights: [
       'Self sign-up with a private company workspace on a 14-day trial — data isolated per company at the model layer',
-      'Garment measurements per customer with history, snapshotted onto every order line',
-      'Invoices, payments, stock and wages that stay in sync, with 13 reports and a full audit trail',
+      'Measurements for seven garment types with history, snapshotted onto every order line',
+      'Server-computed invoices, atomic no-oversell stock, payments and wages that stay in sync — with 13 reports and a full audit trail',
     ],
     visual: 'pos',
     metrics: [
       { value: '13', label: 'Business reports' },
-      { value: '56', label: 'Backend tests passing' },
-      { value: '3', label: 'Built-in roles + custom' },
+      { value: '150', label: 'Backend & frontend tests' },
+      { value: '7', label: 'Garment types measured' },
       { value: '14-day', label: 'Trial per new company' },
     ],
     caseStudy: {
       overview:
-        'Atelier One (formerly RobeApp) runs the day-to-day of a tailoring business. It started as a single-shop system for ROBE Cloth & Tailoring and is now multi-company: anyone can create an account, which sets up a private workspace with built-in roles, default dropdown values and a business profile, then add managers and counter staff. A customer record holds structured measurements for shalwar kameez, kurta pajama, coat and waistcoat with history, and each order line keeps a snapshot so later changes never alter old orders. Sale invoices assign employees and move items from in process to ready to delivered; fabric is deducted by the meter; advances become linked payment receipts; purchases add stock; wages flow into expenses and the profit & loss. A dashboard with deep links, global search and 13 reports show the owner where the business stands.',
+        'Atelier One (formerly RobeApp) runs the day-to-day of a tailoring business. It started as a single-shop system for ROBE Cloth & Tailoring and is now multi-company: anyone can create an account, which sets up a private workspace with built-in roles, default dropdown values and a business profile, then add managers and counter staff. A customer record holds structured measurements for shalwar kameez, kurta pajama, coat, waistcoat, shirt, pant and sherwani — validated to the quarter inch, with history — and each order line keeps a snapshot so later changes never alter old orders. Sale invoices assign employees and move items from in process to ready to delivered; the server computes every amount and deducts fabric by the meter in one atomic, all-or-nothing update, so stock can never be oversold; advances become linked payment receipts; purchases add stock; wages flow into expenses and the profit & loss. A dashboard with deep links, Ctrl+K global search and 13 reports show the owner where the business stands, and invitations, password resets and welcome emails go out over SMTP.',
       flow: {
         title: 'Order lifecycle',
         steps: [
@@ -745,11 +665,11 @@ export const projects: Project[] = [
       capabilities: [
         {
           title: 'Workspaces',
-          items: ['Self sign-up & company setup', '14-day trial', 'Owner & staff accounts', 'Isolated company data'],
+          items: ['Self sign-up & company setup', '14-day trial', 'Email invitations for staff', 'Isolated company data'],
         },
         {
           title: 'Customers',
-          items: ['Garment measurements', 'Measurement history', '360° customer page', 'Running-balance statement'],
+          items: ['7 garment types, ¼-inch precision', 'Measurement history', '360° customer page', 'Running-balance statement'],
         },
         {
           title: 'Orders',
@@ -757,7 +677,7 @@ export const projects: Project[] = [
         },
         {
           title: 'Stock & purchases',
-          items: ['Meter-based fabric stock', 'Low-stock alerts & reorder', 'Purchase invoices', 'Stock movement history'],
+          items: ['Meter-based fabric stock', 'Atomic no-oversell checks', 'Low-stock alerts & reorder', 'Stock movement history'],
         },
         {
           title: 'People & money',
@@ -772,7 +692,7 @@ export const projects: Project[] = [
         {
           layer: 'Frontend',
           tech: 'Angular 18 · signals · Angular Material',
-          detail: 'Standalone, lazy-loaded feature routes with functional guards, a shared UI kit (grid, date pickers, drawers, confirm dialogs) and a light and dark Graphite & Gold theme.',
+          detail: 'Standalone, lazy-loaded feature routes with functional guards, a shared UI kit (grid, date pickers, drawers, confirm dialogs), one breakpoint scale where tables become labelled cards on phones, and a light and dark Graphite & Gold theme.',
         },
         {
           layer: 'API',
@@ -791,13 +711,13 @@ export const projects: Project[] = [
         },
         {
           layer: 'Integrity',
-          tech: 'Linked records · delete guards',
-          detail: 'An invoice’s paid amount always equals its linked payments, deletes reverse stock and balances, and records in use can only be marked inactive.',
+          tech: 'Server-side money · atomic stock · delete guards',
+          detail: 'Totals are recomputed on the server from line items, stock is taken with one conditional update per product, an invoice’s paid amount always equals its linked payments, and records in use can only be marked inactive.',
         },
         {
           layer: 'Quality',
-          tech: 'Jest · Puppeteer',
-          detail: '10 backend suites on throw-away databases, including company isolation, plus browser QA of every screen in both themes at desktop and phone widths.',
+          tech: 'Jest · Jasmine · mutation checks · headless Chrome',
+          detail: '83 backend tests in 14 suites on throw-away databases — including company isolation — 67 frontend tests, targeted mutation checks (9 of 9 killed) and an overflow audit of every route at 360 to 1024 px.',
         },
       ],
       contribution: [
@@ -805,9 +725,10 @@ export const projects: Project[] = [
         'Turned the single-shop RobeApp into a multi-company suite with self sign-up, trials, company owners and a tenant plugin that isolates every query — and migrated the original shop’s data into its own company.',
         'Modelled garment measurements per customer with history and snapshotted them onto order lines.',
         'Kept money and stock consistent: advances as linked receipts, paid always equal to linked payments, deletes that reverse their effects and delete guards for records in use.',
-        'Built roles and permissions down to module and action, token versioning for instant sign-out and an admin-assisted password reset with one-time hashed links.',
+        'Made every sale atomic: the server computes all amounts and refuses an oversold invoice without touching stock, balances or payments.',
+        'Built roles and permissions down to module and action, token versioning for instant sign-out, and SMTP email for invitations and one-time, hashed password-reset links with an admin-assisted fallback.',
         'Built the dashboard, global search, 13 reports with CSV export, PDF invoices and a field-level activity log.',
-        'Created a shared UI kit and design system with light and dark themes, and covered the backend with 56 Jest tests.',
+        'Created a shared UI kit and responsive design system with light and dark themes, and covered it with 150 backend and frontend tests plus targeted mutation checks.',
       ],
       involves: [
         {
@@ -827,22 +748,23 @@ export const projects: Project[] = [
           body: 'A product, employee or customer that appears on old invoices can’t simply vanish. Blocking the delete and offering “mark inactive” keeps the history intact.',
         },
       ],
-      note: 'Atelier One is in active development. Customer data is not shown.',
+      note: 'Atelier One is live and in active development — create an account to explore it. Customer data is not shown.',
     },
-    links: [],
+    links: [{ label: 'Open live app', href: 'https://app-atelier-one.vercel.app/' }],
   },
   {
-    id: 'atlas-workspace',
+    id: 'toolnest',
     tier: 'feature',
-    name: 'Atlas Workspace',
-    kind: 'Local-first Productivity Platform',
+    name: 'Toolnest',
+    formerly: 'Atlas Workspace',
+    kind: 'Local-first Productivity & Design Platform',
     context: 'Independent build',
     period: '2026',
-    status: 'Active development',
+    status: 'Live · active development',
     problem:
-      'People bounce between a dozen websites to format JSON, merge a PDF, build a resume or clean a spreadsheet — and upload private files to servers they know nothing about.',
+      'People bounce between a dozen websites to format JSON, merge a PDF, build a resume, send an invoice or design an invitation — and upload private files to servers they know nothing about.',
     summary:
-      'One private workspace with a resume builder, 111 browser-based tools, a Notepad++-style code editor, a banner studio, a spreadsheet with its own formula engine and a smart data-import dashboard. No backend, no account and no uploads — every file is processed and stored in the user’s own browser.',
+      'One private workspace with 113 browser-based tools, a resume builder, Writer, Sheets, Invoice Studio, Banner Studio and four design studios with 523 templates — plus smart data import and local Intelligence. No backend, no account and no uploads: every file is processed and stored in the user’s own browser.',
     role: 'Full-stack — architecture, product and web app',
     stack: [
       'Next.js',
@@ -853,56 +775,58 @@ export const projects: Project[] = [
       'IndexedDB',
       'Zod',
       'Web Workers',
+      'Tiptap',
       'CodeMirror',
       'pdf-lib',
       'pdf.js',
       'SheetJS',
       'Vitest',
       'Playwright',
+      'Stryker',
     ],
     highlights: [
-      '111 tools across text, JSON, HTML/CSS, developer, PDF & files, images and everyday calculators',
-      'Resume builder with 43 templates, live pagination and selectable-text PDF export',
-      'Sheets with a hand-written formula engine, and Excel/CSV import with automatic insights',
+      '113 tools across text, JSON, HTML/CSS, developer, PDF & files, images and everyday calculators',
+      'Resume, Invoice, Banner, Card, Certificate, Menu and Marketing studios — 615 original templates on one canvas engine',
+      'Writer with DOCX/PDF export and Sheets with a hand-written formula engine — all without a server',
     ],
     visual: 'workspace',
     metrics: [
-      { value: '111', label: 'Browser-based tools' },
-      { value: '43', label: 'Resume templates' },
-      { value: '400+', label: 'Unit, integration & E2E tests' },
+      { value: '113', label: 'Browser-based tools' },
+      { value: '615', label: 'Templates across 7 studios' },
+      { value: '1,368', label: 'Unit & integration tests, plus 119 E2E' },
       { value: '0', label: 'Servers, accounts or uploads' },
     ],
     caseStudy: {
       overview:
-        'Atlas Workspace brings everyday tools into one private, local-first app built with Next.js and exported as a fully static site. The resume builder edits structured sections against a live, paginated preview across 43 original templates and prints to a PDF with selectable text and working links. 111 tools cover text, JSON, HTML and CSS, developer utilities, PDF and document conversion, images and everyday calculators. A Notepad++-style editor handles Markdown notes and code files; Banner Studio turns 29 templates — or your resume — into social banners; Sheets is a spreadsheet with its own formula engine; and Smart Data Import profiles, cleans and charts Excel and CSV files with written findings. Everything is versioned, validated and stored in IndexedDB, with one-file backup and import — and no request ever carries the user’s data.',
+        'Toolnest (formerly Atlas Workspace) brings everyday work into one private, local-first app built with Next.js and exported as a fully static site. The resume builder edits structured sections against a live, paginated preview across 43 templates and prints to a PDF with selectable text and working links. 113 tools cover text, JSON, HTML and CSS, developer utilities, PDF and document conversion, file organisation, images and calculators. Writer is a Word-style editor with tables, images and DOCX/PDF export; Sheets is a spreadsheet with its own formula engine; Invoice Studio produces invoices, quotations and receipts from 20 templates with logo, tax and payment QR. Banner Studio and four design studios — cards and invitations, certificates with bulk PDFs and verification QR, restaurant menus and marketing posts — share one canvas engine and 523 original templates, including right-to-left Urdu and Arabic. Smart Data Import profiles, cleans and charts Excel and CSV files with written findings, and Toolnest Intelligence reviews saved work with explainable local rules — no LLM and no uploads. Everything is versioned, validated and stored in IndexedDB, with one-file backup and import.',
       flow: {
         title: 'Smart data import',
         steps: ['Upload', 'Profile', 'Map columns', 'Review & clean', 'Auto insights', 'Import', 'Export'],
       },
       capabilities: [
         {
-          title: 'Resume builder',
-          items: ['43 templates in 15 categories', 'Live paginated preview', 'Selectable-text PDF export', 'Rule-based review & tips'],
+          title: 'Resume & documents',
+          items: ['43 resume templates', 'Live paginated preview', 'Writer with DOCX & PDF export', 'Selectable-text PDFs'],
         },
         {
-          title: 'Developer & JSON',
-          items: ['Formatters & validators', 'JSONPath, diff & schema', 'Regex tester in a worker', 'JWT, hashes, UUIDs, cron'],
+          title: 'Design studios',
+          items: ['359 cards & invitations', '48 certificates with bulk PDF', '36 menus · 80 posts & posters', '29 banners · multi-select editing'],
         },
         {
-          title: 'PDF & documents',
-          items: ['Merge, split, rotate, watermark', 'PDF ↔ Word, Excel ↔ CSV', 'PDF tables to Excel', 'Lossless PDF optimisation'],
+          title: 'Invoice Studio',
+          items: ['Invoices, quotes & receipts', '20 templates with your logo', 'Tax, discounts & payment QR', 'Status tracking & CSV'],
         },
         {
-          title: 'Sheets',
-          items: ['Hand-written formula engine', 'Virtualised 100k-row grid', 'Sort, filter & charts', 'XLSX / CSV / PDF import & export'],
+          title: 'Sheets & data',
+          items: ['Hand-written formula engine', 'Virtualised 100k-row grid', 'Smart import & auto insights', 'Formula-injection-safe export'],
         },
         {
-          title: 'Data insights',
-          items: ['Column profiling & quality score', 'Cleaning without mutation', 'Auto-chosen charts with findings', 'Formula-injection-safe export'],
+          title: 'Developer & PDF tools',
+          items: ['JSON, JSONPath, diff & schema', 'Regex tester in a worker', 'Merge, split & convert PDFs', 'ZIP archives & batch rename'],
         },
         {
-          title: 'Notes, banners & files',
-          items: ['Markdown & Notepad++-style code', 'Banner Studio with 29 templates', 'Image, favicon & QR tools', 'One-file backup & restore'],
+          title: 'Workspace',
+          items: ['Ctrl+K command palette', 'Local Intelligence reviews', 'My Documents library', 'One-file backup & restore'],
         },
       ],
       architecture: [
@@ -914,43 +838,43 @@ export const projects: Project[] = [
         {
           layer: 'UI',
           tech: 'React · Tailwind CSS v4 · Radix UI',
-          detail: 'A design system on semantic tokens with light and dark themes; heavy libraries load only on the pages that use them.',
+          detail: 'A design system on semantic tokens with light and dark themes and a navy app shell; heavy libraries load only on the pages that use them.',
         },
         {
           layer: 'Storage',
-          tech: 'IndexedDB · Zod · versioned migrations',
-          detail: 'Repositories behind a storage adapter: every read validated and migrated, unreadable records quarantined instead of deleted, and an in-memory fallback when IndexedDB is unavailable.',
+          tech: 'IndexedDB v6 · Zod · versioned migrations',
+          detail: 'Repositories behind a storage adapter: every read validated and migrated, unreadable records quarantined instead of deleted, cross-tab sync and an in-memory fallback when IndexedDB is unavailable.',
         },
         {
-          layer: 'Formula engine',
-          tech: 'Lexer · parser · interpreter',
-          detail: 'Spreadsheet formulas parsed by an explicit grammar and evaluated without eval — with references, ranges, cross-sheet links, 50+ functions and cycle detection.',
+          layer: 'Engines',
+          tech: 'Formula interpreter · canvas renderer · paginator',
+          detail: 'Spreadsheet formulas parsed by an explicit grammar and evaluated without eval; one renderer draws every design on screen and in export; one paginator serves the resume preview and its PDF.',
         },
         {
           layer: 'Documents',
-          tech: 'pdf-lib · pdf.js · mammoth · docx · SheetJS',
-          detail: 'Ten converters with typed, React-free services; file types detected from bytes, and archives inflated under limits so ZIP bombs never reach a parser.',
+          tech: 'pdf-lib · pdf.js · Tiptap · mammoth · docx · SheetJS',
+          detail: 'Typed, React-free converters; file types detected from bytes, and archives inflated under limits so ZIP bombs never reach a parser.',
         },
         {
           layer: 'Security',
           tech: 'Sandboxed iframes · DOMPurify · Web Workers',
-          detail: 'User HTML renders only in script-free sandboxes, Markdown is sanitised, JSONPath is parsed not evaluated and regexes run in a terminable worker.',
+          detail: 'User HTML renders only in script-free sandboxes, Writer content passes an allow-list sanitiser, JSONPath is parsed not evaluated and regexes run in a terminable worker.',
         },
         {
           layer: 'Quality',
-          tech: 'Vitest · Testing Library · Playwright',
-          detail: '361 unit and integration tests and 40 end-to-end journeys that generate real PDFs and check page counts, fonts, links and phone-width layouts.',
+          tech: 'Vitest · Playwright · Stryker · axe',
+          detail: '1,368 unit and integration tests, 119 Playwright journeys against the static export, axe checks on 138 routes, and Stryker mutation scores of 83.75% and 88.60% on the core logic modules.',
         },
       ],
       contribution: [
         'Designed and built the whole product: architecture, design system, storage layer and every module.',
         'Built a resume builder whose preview and PDF share one paginator, with 43 templates driven by a single renderer.',
-        'Built 111 tools from a single registry, with simple transforms as pure functions and richer tools lazy-loaded.',
+        'Built 113 tools from a single registry, with simple transforms as pure functions and richer tools lazy-loaded.',
+        'Built a canvas engine shared by Banner Studio and four design studios, with 523 templates generated as data, multi-select editing, bulk certificates and print imposition.',
         'Wrote a spreadsheet formula engine — lexer, parser and interpreter — with dependency tracking, error propagation and a virtualised grid.',
-        'Built Smart Data Import: byte-level file detection, column profiling, non-destructive cleaning and an insights dashboard that picks honest charts and writes findings.',
-        'Built ten in-browser document converters with ZIP-bomb limits, macro detection and formula-injection-safe exports.',
+        'Built Writer on Tiptap with DOCX import and export, and an Invoice Studio with totals, tax buckets, conversions and readiness checks.',
         'Made storage resilient: schema validation and migrations on every read, quarantine for damaged records, backups and cross-tab sync.',
-        'Covered it with 361 unit and integration tests, 40 Playwright journeys and mutation testing.',
+        'Covered it with 1,368 unit and integration tests, 119 Playwright journeys, accessibility checks and mutation testing.',
       ],
       involves: [
         {
@@ -962,17 +886,161 @@ export const projects: Project[] = [
           body: 'A renamed PDF, a ZIP bomb, a macro or a cell that starts with “=” are all real inputs. Detecting formats from bytes and inflating under limits keeps the parsers safe.',
         },
         {
-          title: 'Data people can’t lose',
-          body: 'Browser storage can be cleared or corrupted. Validating every read, quarantining bad records and offering one-file backups means a broken record never takes the rest with it.',
+          title: 'Templates are data',
+          body: 'Six hundred templates can’t be six hundred hand-drawn files. Generating each one as layers on a single engine keeps every design editable, exportable and testable at every size.',
         },
         {
           title: 'Honest output',
           body: 'A PDF that looks right but has broken text, or a chart that misleads, is worse than none. The tests check real PDFs, and the insights only offer charts that fit the data.',
         },
       ],
-      note: 'Atlas Workspace is live and in active development. It runs entirely in the browser — nothing is uploaded or tracked.',
+      note: 'Toolnest is live and in active development. It runs entirely in the browser — nothing is uploaded or tracked.',
     },
-    links: [{ label: 'Open live app', href: 'https://atlas-workspace-ai.vercel.app/' }],
+    links: [{ label: 'Open live app', href: 'https://app-toolnest.vercel.app/' }],
+  },
+  {
+    id: 'alam-pakwan-house',
+    tier: 'feature',
+    name: 'Alam Pakwan House',
+    kind: 'Catering Website & Admin CMS',
+    context: 'Client project · Karachi',
+    period: '2026',
+    status: 'Live',
+    problem:
+      'A caterer takes event orders by website, phone, WhatsApp and walk-in — and every one needs a quotation, a follow-up and a date on the calendar that nobody can afford to miss.',
+    summary:
+      'A premium catering website with a secure admin CMS behind it. Customers browse the menu, event services and packages, request a quote or chat live; the team runs every inquiry from first message to quotation, confirmed event and calendar — and edits the whole site themselves, without a developer.',
+    role: 'Full-stack — design, frontend, backend & deployment',
+    stack: [
+      'React',
+      'TypeScript',
+      'React Router',
+      'TanStack Query',
+      'Tailwind CSS',
+      'Node.js',
+      'Express',
+      'MongoDB',
+      'Mongoose',
+      'Zod',
+      'Sharp',
+      'Cloudinary',
+      'Nodemailer',
+      'Vitest',
+      'Supertest',
+    ],
+    highlights: [
+      'Inquiry pipeline from website, live chat, phone, WhatsApp or walk-in through quotation to confirmed event',
+      'Quotation builder with line items, discount and terms — print, save as PDF or send on WhatsApp',
+      'Built-in live chat, events calendar, scheduled announcement bar and a CMS for every page',
+    ],
+    visual: 'catering',
+    metrics: [
+      { value: '7', label: 'Inquiry stages, lead to completed' },
+      { value: '17', label: 'Admin pages' },
+      { value: '33', label: 'API tests, plus mutation testing' },
+      { value: '88', label: 'API calls audited — 0 broken' },
+    ],
+    caseStudy: {
+      overview:
+        'Alam Pakwan House is a catering website and admin CMS for a caterer in Karachi. The public site covers a searchable menu with categories and a page for every dish, one page per event type, quotation-only packages, a gallery, contact and a request-a-quote form, with a “We Are Here!” live-chat bubble on every page. Behind it, a lazy-loaded admin panel runs the business: inquiries with status, assignment, follow-ups, notes, history and CSV export — including manual entry for phone, WhatsApp and walk-in orders — a quotation builder that prints, saves as PDF or sends on WhatsApp, an events calendar, a live-chat inbox, and editors for every dish, package, service, gallery item, testimonial, FAQ and website setting. One Node service serves both the API and the built website, so cookies stay same-origin and deployment stays simple.',
+      flow: {
+        title: 'Inquiry to event',
+        steps: ['Quote request', 'New inquiry', 'Contacted', 'Quotation built', 'Quotation sent', 'Confirmed', 'Completed'],
+      },
+      capabilities: [
+        {
+          title: 'Public website',
+          items: ['Menu with search & categories', 'A page for every dish', 'Event services & packages', 'Request-a-quote form'],
+        },
+        {
+          title: 'Inquiries',
+          items: ['Status, assignment & follow-ups', 'Notes & full history', 'Phone, WhatsApp & walk-in entry', 'Injection-safe CSV export'],
+        },
+        {
+          title: 'Quotations & calendar',
+          items: ['Line items, discount & terms', 'Print, PDF or WhatsApp', 'Events calendar', 'Confirmed value this month'],
+        },
+        {
+          title: 'Live chat',
+          items: ['“We Are Here!” bubble on every page', 'Admin inbox with quick replies', 'Turn a chat into an inquiry', 'Optional tawk.to'],
+        },
+        {
+          title: 'Content management',
+          items: ['Dishes, categories & packages', 'Gallery, testimonials & FAQs', 'Scheduled announcement bar', 'Website settings'],
+        },
+        {
+          title: 'Team & data',
+          items: ['Owner and staff roles', 'No public sign-up', 'Owner-only data backup', 'Email alerts over SMTP'],
+        },
+      ],
+      architecture: [
+        {
+          layer: 'Frontend',
+          tech: 'React 18 · TypeScript · React Router · TanStack Query',
+          detail: 'The public site and a lazy-loaded admin in one app, with server state cached and invalidated by TanStack Query.',
+        },
+        {
+          layer: 'Design system',
+          tech: 'Tailwind CSS · tokens.json',
+          detail: 'One token file drives Tailwind, CSS variables and the generated logo, so colour, type and spacing stay consistent everywhere.',
+        },
+        {
+          layer: 'Backend',
+          tech: 'Node.js · Express · TypeScript',
+          detail: 'One service serves the API and the built website from the same origin, injecting per-page SEO tags, structured data, a sitemap and robots for crawlers.',
+        },
+        {
+          layer: 'Data',
+          tech: 'MongoDB · Mongoose · shared Zod schemas',
+          detail: 'The same Zod schemas validate in the browser and on the server, stripping unknown fields so there is no mass assignment.',
+        },
+        {
+          layer: 'Media',
+          tech: 'Sharp · Cloudinary',
+          detail: 'Uploads are type- and size-checked, stripped of metadata and re-encoded to WebP before they are stored.',
+        },
+        {
+          layer: 'Security',
+          tech: 'scrypt · server sessions · CSRF · Helmet CSP',
+          detail: 'Hashed session tokens in MongoDB, HttpOnly cookies, CSRF on every admin write, login rate limits with account lockout, and a strict CSP with HSTS.',
+        },
+        {
+          layer: 'Quality',
+          tech: 'Vitest · Supertest · Stryker · headless Chrome',
+          detail: '33 API tests with mutation testing, a wiring audit of 88 frontend calls against server routes, and crawls of 51 public and 17 admin pages from 320 to 1440 px.',
+        },
+      ],
+      contribution: [
+        'Designed and built the whole product: brand, design system, public website, admin CMS, API and deployment.',
+        'Built a seven-stage inquiry pipeline with assignment, follow-ups, notes, history and CSV export protected against formula injection.',
+        'Built a quotation builder that prints, saves as PDF or sends on WhatsApp, and an events calendar linked to inquiries.',
+        'Built live chat end to end — a bubble on every page, an admin inbox with editable quick replies and one-click conversion of a chat into an inquiry.',
+        'Secured the admin with scrypt hashing, hashed server-side sessions, CSRF tokens, rate limits, account lockout and owner/staff roles checked on the server.',
+        'Protected public forms with honeypot and timing checks, rate limits and idempotency keys against duplicate submissions.',
+        'Shared Zod schemas between client and server so every rule is written once and enforced in both places.',
+        'Verified it with 33 API tests, Stryker mutation testing, a route-wiring audit and headless-Chrome crawls at five screen widths.',
+      ],
+      involves: [
+        {
+          title: 'Every channel, one list',
+          body: 'Orders don’t only come from the website. Manual entry for phone, WhatsApp and walk-in requests means the dashboard and calendar reflect the real business.',
+        },
+        {
+          title: 'Owner-run',
+          body: 'Menus, packages, announcements and FAQs change often. Everything on the site is editable from the admin, so the owner never waits on a developer.',
+        },
+        {
+          title: 'Honest content',
+          body: 'The seed publishes only what the business already advertises — no invented prices, testimonials or ratings. Anything unconfirmed ships as a draft for the owner to review.',
+        },
+        {
+          title: 'Secure by default',
+          body: 'A small business site is still a target. Sessions, CSRF, CSP, rate limits and re-encoded uploads were in from day one, not bolted on later.',
+        },
+      ],
+      note: 'Alam Pakwan House is live. The public website is open to explore; the admin panel is private to the business.',
+    },
+    links: [{ label: 'Open live site', href: 'https://app-alam-pakwan-house.vercel.app/' }],
   },
   {
     id: 'mounties',
@@ -1135,6 +1203,112 @@ export const projects: Project[] = [
       note: 'Mounties is a client project delivered by i-Splendid. Client-specific details, customer data and source code are intentionally not shown.',
     },
     links: [],
+  },
+  {
+    id: 'splendid-accounts',
+    tier: 'index',
+    name: 'Splendid Accounts',
+    kind: 'Multi-tenant Cloud ERP & Accounting Platform',
+    context: 'Professional · i-Splendid',
+    period: 'Mar 2023 — Jun 2023',
+    problem:
+      'Small and medium-sized businesses run sales, purchasing, stock, payroll and tax filing in separate tools and spreadsheets — so the books never quite match what actually happened at the counter or in the warehouse.',
+    summary:
+      'A multi-tenant, multi-branch cloud ERP for small and medium-sized businesses in Pakistan, Saudi Arabia and Malaysia — sales, purchase, inventory, double-entry accounting, POS, payroll, CRM and tax-authority e-invoicing in one system. I worked on its Angular frontend: sales, purchase, POS, inventory and reporting screens, and the role and permission system.',
+    role: 'Frontend — Angular',
+    stack: ['Angular', 'TypeScript', 'RxJS', 'Nebular', 'Syncfusion EJ2', 'ECharts', 'SCSS', 'Bootstrap', 'REST APIs'],
+    highlights: [
+      'Sales & purchase invoices and returns, plus point of sale (POS)',
+      'Inventory, CRM and financial reports such as profit & loss',
+      'Role-based access control — granular permissions and rights across modules',
+    ],
+    visual: 'accounts',
+    metrics: [
+      { value: '3', label: 'Countries — PK, KSA, MY' },
+      { value: '140+', label: 'Database entities' },
+      { value: '180+', label: 'API controllers' },
+      { value: '21', label: 'Built-in roles' },
+    ],
+    caseStudy: {
+      overview:
+        'Splendid Accounts is i-Splendid’s cloud ERP and accounting platform. Every company is an isolated tenant with its own branches, currencies, roles and settings, and every screen works inside a company-and-branch context. Sales move from quotation to order, delivery and invoice; purchases from order to receipt and invoice; and every approved document posts a balanced double-entry transaction, moves stock in the right warehouse and updates customer or vendor balances. On top sit POS, payroll, CRM, dashboards and e-invoicing with the tax authorities of Pakistan (FBR), Saudi Arabia (ZATCA) and Malaysia (MyInvois). My role was on the Angular frontend that accountants, cashiers and managers use every day.',
+      flow: {
+        title: 'Sales cycle',
+        steps: ['Quotation', 'Sale order', 'Delivery', 'Invoice', 'Approval', 'Ledger & stock posting', 'Payment & settlement'],
+      },
+      capabilities: [
+        { title: 'Sales', items: ['Quotations, orders & deliveries', 'Sale invoices & returns', 'Credit notes & payments', 'Customer portal'] },
+        { title: 'Purchase', items: ['Purchase orders & receipts', 'Purchase invoices & returns', 'Vendor payments & refunds', 'Vendor settlements'] },
+        { title: 'Inventory', items: ['Multi-warehouse stock', 'Batches & adjustments', 'Composite products', 'Inventory valuation'] },
+        { title: 'Accounting', items: ['Chart of accounts', 'Journal entries', 'Bank deposits & fund transfers', 'Multi-currency'] },
+        { title: 'Point of sale', items: ['POS invoices', 'Cash registers & sessions', 'Delivery counter', 'POS summaries'] },
+        { title: 'People & CRM', items: ['Employees & attendance', 'Payroll periods & leave', 'Leads & events', 'Sales geography'] },
+        { title: 'Compliance', items: ['FBR e-invoicing (Pakistan)', 'ZATCA (Saudi Arabia)', 'MyInvois (Malaysia)', 'Audit trail'] },
+        { title: 'Insight & access', items: ['KPI dashboards & aging', 'P&L, trial balance, balance sheet', 'PDF & Excel exports', 'Roles & per-endpoint rights'] },
+      ],
+      architecture: [
+        {
+          layer: 'Frontend',
+          tech: 'Angular · Nebular · Syncfusion EJ2',
+          detail: 'Feature modules per business area, a shared API service layer, route guards and HTTP interceptors, server-paged data grids and ECharts dashboards across four themes.',
+        },
+        {
+          layer: 'Backend',
+          tech: 'ASP.NET Core · Entity Framework Core',
+          detail: 'A layered API — controllers, services, repositories and a unit of work — with transaction builders that turn each approved document into balanced ledger entries.',
+        },
+        {
+          layer: 'Data',
+          tech: 'SQL Server',
+          detail: 'Every record is keyed by company and branch, so tenants are isolated at the database level, with row versions for optimistic concurrency.',
+        },
+        {
+          layer: 'Access control',
+          tech: 'JWT · API keys · RBAC',
+          detail: 'Roles map to page actions and page actions to API endpoints; the frontend mirrors the same rights to show only the menus, screens and buttons a user may use.',
+        },
+        {
+          layer: 'Background & real time',
+          tech: 'Hangfire · SignalR',
+          detail: 'Recurring invoices, reminders, inventory valuation and tax-authority posting run as background jobs, with live notifications pushed to the browser.',
+        },
+        {
+          layer: 'Integrations',
+          tech: 'Tax authorities · payments · messaging',
+          detail: 'FBR, ZATCA and MyInvois e-invoicing, local payment gateways, email, SMS and WhatsApp, push notifications and a shipping link to WinqoHub.',
+        },
+      ],
+      contribution: [
+        'Sales modules: sale invoices and sale returns, including draft, approve and void flows.',
+        'Purchase modules: purchase invoices and purchase returns.',
+        'Point of sale (POS) screens for fast, counter-side selling.',
+        'Inventory modules for tracking stock across warehouses.',
+        'Financial reports, including profit & loss (income statement).',
+        'CRM screens for managing customers.',
+        'Roles and permissions: role-based access control with granular rights, so each user only sees and does what their role allows.',
+        'Maintaining and improving production features, debugging issues and collaborating with backend and product teammates.',
+      ],
+      involves: [
+        {
+          title: 'Numbers that must add up',
+          body: 'Approving one invoice posts receivables, revenue, cost of sales, tax and stock at once. A frontend for accounting has to make correct data entry the easy path, because a mistake shows up in someone’s profit & loss.',
+        },
+        {
+          title: 'Permissions everywhere',
+          body: 'Twenty-one roles cut across every module — menus, screens, buttons and actions. Getting access control right is what lets a business safely hand the system to cashiers, accountants and managers alike.',
+        },
+        {
+          title: 'Documents with a lifecycle',
+          body: 'Drafts, approvals, voids and revisions all behave differently, and a revised invoice must keep its number and its audit trail. The UI has to make each state and its allowed actions obvious.',
+        },
+        {
+          title: 'Speed at the counter',
+          body: 'POS is used under pressure, with customers waiting. Its screens need to be fast and forgiving in a way back-office forms don’t.',
+        },
+      ],
+      note: 'Splendid Accounts is a proprietary product. Platform architecture is described at a high level; my own work was on the Angular frontend. Source code, configuration and customer data are not shared.',
+    },
+    links: [{ label: 'Product website', href: 'https://splendidaccounts.com/' }],
   },
   {
     id: 'nursenova',
@@ -1651,8 +1825,8 @@ export const repos: { name: string; title: string; description: string; tags: st
 /* ------------------------------------------------------------------ */
 
 export const stats: { value: string; label: string }[] = [
-  { value: '3+', label: 'Years of production experience' },
+  { value: '4+', label: 'Years of production experience' },
   { value: '20+', label: 'Courier integrations shipped' },
-  { value: '9', label: 'Products & platforms built' },
+  { value: '10', label: 'Products & platforms built' },
   { value: 'Apr ’24', label: 'Employee of the Month' },
 ]

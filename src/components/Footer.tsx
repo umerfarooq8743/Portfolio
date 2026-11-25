@@ -1,7 +1,7 @@
 import { ArrowUp, ArrowUpRight } from 'lucide-react'
 import { navItems, profile } from '../data/profile'
 
-const linkClass = 'text-fg-muted transition-colors hover:text-fg'
+const linkClass = 'inline-flex min-h-6 items-center py-1 text-fg-muted transition-colors hover:text-fg'
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -23,7 +23,7 @@ export function Footer() {
 
         <nav aria-label="Footer" className="md:col-span-3 md:col-start-7">
           <p className="label mb-5">Navigate</p>
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm">
             {[...navItems, { id: 'contact', label: 'Contact' }].map((item) => (
               <li key={item.id}>
                 <a href={`#${item.id}`} className={linkClass}>
@@ -36,7 +36,7 @@ export function Footer() {
 
         <div className="md:col-span-3">
           <p className="label mb-5">Elsewhere</p>
-          <ul className="space-y-3 text-sm">
+          <ul className="space-y-1 text-sm">
             <li>
               <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-1.5 ${linkClass}`}>
                 LinkedIn <ArrowUpRight className="size-3.5" aria-hidden="true" />
@@ -74,7 +74,7 @@ export function Footer() {
           <p>
             © {year} {profile.name}. Built with React, TypeScript and Tailwind CSS.
           </p>
-          <a href="#top" className="inline-flex items-center gap-1.5 transition-colors hover:text-fg">
+          <a href="#top" className="inline-flex min-h-6 items-center gap-1.5 py-1 transition-colors hover:text-fg">
             Back to top
             <ArrowUp className="size-3.5" aria-hidden="true" />
           </a>

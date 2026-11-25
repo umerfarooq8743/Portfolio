@@ -2,7 +2,7 @@
 
 Personal portfolio of **Umer Farooq**, Full-Stack Software Engineer (MEAN Stack) based in Karachi, Pakistan.
 
-🔗 **Live:** https://umer-farooq-portfolio-ashy.vercel.app
+🔗 **Live:** https://dev-umerfarooq.vercel.app
 
 It showcases production work in order management with AI, ERP, customs clearing, tailoring POS, event booking, healthcare and desktop messaging. Every project is presented as a case study, with my role kept clearly separate from the product itself.
 
@@ -12,17 +12,18 @@ It showcases production work in order management with AI, ERP, customs clearing,
 
 ## About me
 
-I'm a software engineer at **i-Splendid** with 3+ years of experience building business software on **Angular, Node.js, Express.js and MongoDB**. I've also shipped work on .NET, SQL Server, MySQL and Electron.
+I'm a software engineer at **i-Splendid** with 4+ years of experience building business software on **Angular, Node.js, Express.js and MongoDB**. I've also shipped work on .NET, SQL Server, MySQL and Electron.
 
 - **WinqoHub** (formerly ShipKardo): full-stack, AI-powered order management system with 20+ courier integrations, selling-channel sync (Shopify, WooCommerce, Daraz), Splendid Accounts inventory sync, SMTP email and SMS. AI features: natural-language reporting on the OpenAI API, and AI agents.
 - **Splendid Accounts**: Angular frontend of a multi-tenant cloud ERP (Pakistan, Saudi Arabia, Malaysia). I built sales and purchase invoices and returns, POS, inventory, CRM, profit & loss reporting, and role-based access control.
 - **Mounties**: multi-location venue booking and payments platform for an Australian client — parties, drop-and-dine and general admission with Stripe deposits (Angular, ASP.NET Core, SQL Server).
 - **NurseNova**: family health app — profiles, health history, records, medication & vaccination reminders and nearby-doctor search. I built the admin panel and the REST APIs consumed by the mobile app (Angular, Node.js, MySQL).
 - **WinQo**: Electron desktop app that turns WhatsApp numbers into an automated messaging gateway, pulling tasks from Splendid Accounts, WinqoHub or any custom API (whatsapp-web.js, SQLite).
-- **Manifest ERP** (formerly ClearPort ERP): multi-tenant customs-clearing and freight-forwarding ERP — 17-step workflow, 14 customs stages, billing, banks and 15 verified reports (React, Node.js, PostgreSQL, Prisma).
-- **Vantra ERP** (formerly Cuba POS): multi-company trading ERP — sales, purchases, moving-average inventory, POS, automatic double-entry accounting and 20 reports (Angular 17, Node.js, MySQL).
-- **Atlas Workspace**: local-first productivity platform — resume builder, 111 browser tools, code editor, banner studio, spreadsheet with a formula engine and data insights (Next.js, React, TypeScript, IndexedDB).
-- **Atelier One** (formerly RobeApp): multi-company tailoring business suite — measurements, workshop orders, meter-based stock, payments, wages and 13 reports (Angular 18, Node.js, MongoDB).
+- **Manifest ERP** (formerly ClearPort ERP): multi-tenant customs-clearing and freight-forwarding ERP — 17-step workflow, 14 customs stages, billing with tax codes, banks, period locking and 18 reports (React, Node.js, PostgreSQL, Prisma). [Live app](https://app-manifest-erp.vercel.app/)
+- **Vantra ERP** (formerly Cuba POS): multi-company trading ERP — sales, purchases, moving-average inventory, POS, automatic double-entry accounting and 20 reports (Angular 21, Node.js, MySQL). [Live app](https://app-vantra-erp.vercel.app/)
+- **Toolnest** (formerly Atlas Workspace): local-first productivity and design platform — 113 browser tools, resume builder, Writer, Sheets with a formula engine, Invoice Studio and design studios with 615 templates, no backend (Next.js, React, TypeScript, IndexedDB). [Live app](https://app-toolnest.vercel.app/)
+- **Alam Pakwan House**: live catering website and admin CMS — inquiry pipeline, quotation builder (PDF / WhatsApp), events calendar, live chat and a CMS for every page (React, Node.js, Express, MongoDB, Zod). [Live site](https://app-alam-pakwan-house.vercel.app/)
+- **Atelier One** (formerly RobeApp): multi-company tailoring business suite — measurements for 7 garment types, workshop orders, no-oversell meter-based stock, payments, wages and 13 reports (Angular 18, Node.js, MongoDB). [Live app](https://app-atelier-one.vercel.app/)
 - 🏆 Employee of the Month at i-Splendid, April 2024.
 
 ---
