@@ -52,18 +52,22 @@ function Title({ text }: { text: string }) {
       id="project-detail-title"
       className="font-display text-[clamp(3rem,1.4rem+7vw,8.5rem)] leading-[0.9] font-semibold tracking-[-0.055em] text-fg"
     >
-      {text.split(' ').map((word, i) => (
-        <span key={i} className="mr-[0.22em] inline-block overflow-hidden pb-[0.08em] align-bottom last:mr-0">
-          <motion.span
-            className="inline-block"
-            initial={{ y: '105%' }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.9, ease, delay: 0.25 + i * 0.08 }}
-          >
-            {word}
-          </motion.span>
-        </span>
-      ))}
+      {/* Words animate in separately; screen readers get the title as one phrase. */}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {text.split(' ').map((word, i) => (
+          <span key={i} className="mr-[0.22em] inline-block overflow-hidden pb-[0.08em] align-bottom last:mr-0">
+            <motion.span
+              className="inline-block"
+              initial={{ y: '105%' }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, ease, delay: 0.25 + i * 0.08 }}
+            >
+              {word}
+            </motion.span>
+          </span>
+        ))}
+      </span>
     </h2>
   )
 }

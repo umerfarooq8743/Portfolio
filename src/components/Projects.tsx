@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { projects, type Project } from '../data/profile'
+import { findProject, parseWorkHash } from '../lib/projects'
 import { spotlight } from '../hooks/useSpotlight'
 import { SectionHeader } from './ui/SectionHeader'
 import { Reveal } from './ui/Reveal'
@@ -62,7 +63,7 @@ function ExternalLinks({ project }: { project: Project }) {
           href={l.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
+          className="inline-flex min-h-10 items-center gap-1.5 text-sm text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
         >
           {l.label}
           <ArrowUpRight className="size-3.5" aria-hidden="true" />
@@ -236,10 +237,10 @@ function IndexProject({ project, index, onOpen }: { project: Project; index: num
   )
 }
 
-const hashId = () => /^#work\/([\w-]+)$/.exec(window.location.hash)?.[1]
+const projectFromHash = () => findProject(parseWorkHash(window.location.hash))
 
 export function Projects() {
-  const [active, setActive] = useState<Project | null>(() => projects.find((p) => p.id === hashId()) ?? null)
+  const [active, setActive] = useState<Project | null>(projectFromHash)
   const [origin, setOrigin] = useState<DOMRect | null>(null)
   const pushed = useRef(false)
 
@@ -247,7 +248,7 @@ export function Projects() {
   useEffect(() => {
     const sync = () => {
       pushed.current = false
-      setActive(projects.find((p) => p.id === hashId()) ?? null)
+      setActive(projectFromHash())
     }
     window.addEventListener('popstate', sync)
     return () => window.removeEventListener('popstate', sync)
@@ -296,7 +297,7 @@ export function Projects() {
               Production software, <span className="text-fg-muted">built for real businesses.</span>
             </>
           }
-          intro="Order management with AI, a customs-clearing ERP, a trading ERP with POS, an accounting ERP, tailoring POS, booking, healthcare and desktop messaging. Open any project for the full case study — proprietary work is shown with illustrative sketches, never fake screenshots."
+          intro="Order management with AI, a customs-clearing ERP, a trading ERP with POS, a tailoring suite, a productivity and design platform, a catering website with its own CMS, plus accounting, booking, healthcare and desktop messaging. Six are live — open any project for the full case study; proprietary work is shown with illustrative sketches, never fake screenshots."
         />
 
         <div className="space-y-6 lg:space-y-8">

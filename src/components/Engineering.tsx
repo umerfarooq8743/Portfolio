@@ -24,12 +24,12 @@ export function Engineering() {
         />
 
         <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-8">
+          <Reveal className="min-w-0 lg:col-span-8">
             <IntegrationMap />
           </Reveal>
 
           {focus && (
-            <Reveal delay={120} className="lg:col-span-4">
+            <Reveal delay={120} className="min-w-0 lg:col-span-4">
               <article className="relative flex h-full flex-col overflow-hidden rounded-[var(--radius-lg)] bg-fg p-6 text-bg shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)] sm:p-8">
                 <div
                   aria-hidden="true"
